@@ -479,7 +479,7 @@ const Articles = {
     const sets = ['title=?', 'excerpt=?', 'content=?', 'author=?', 'published=?'];
     const params = [data.title, data.excerpt, data.content, data.author, data.published ? 1 : 0];
     if (data.slug) { sets.push('slug=?'); params.push(data.slug); }
-    if (data.image) { sets.push('image=?'); params.push(data.image); }
+    if (data.image !== undefined) { sets.push('image=?'); params.push(data.image); }
     params.push(id);
     await query(`UPDATE articles SET ${sets.join(', ')} WHERE id=?`, params);
   },

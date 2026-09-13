@@ -490,11 +490,14 @@ app.post('/admin/team', requireAuth, uploadTeam.single('photo'), h(async (req, r
 app.put('/admin/team/:id', requireAuth, uploadTeam.single('photo'), h(async (req, res) => {
   const item = await db.Team.find(req.params.id);
   if (!item) { req.flash('error', 'Data tidak ditemukan.'); return res.redirect('/admin/team'); }
-  const { name, title, role, bio, order } = req.body;
+  const { name, title, role, bio, order, removePhoto } = req.body;
   let photo = null;
   if (req.file) {
     removeFileIfLocal(item.photo);
     photo = `/uploads/team/${req.file.filename}`;
+  } else if (removePhoto) {
+    removeFileIfLocal(item.photo);
+    photo = '';
   }
   await db.Team.update(req.params.id, { name, title, role, bio, order: parseInt(order) || item.order, photo });
   req.flash('success', 'Data anggota tim berhasil diperbarui.');
@@ -574,7 +577,7 @@ app.post('/admin/articles', requireAuth, uploadArticle.single('image'), h(async 
 app.put('/admin/articles/:id', requireAuth, uploadArticle.single('image'), h(async (req, res) => {
   const item = await db.Articles.find(req.params.id);
   if (!item) { req.flash('error', 'Artikel tidak ditemukan.'); return res.redirect('/admin/articles'); }
-  const { title, excerpt, content, author, published } = req.body;
+  const { title, excerpt, content, author, published, removeImage } = req.body;
   const update = { title, excerpt, content, author, published: published === 'on' };
   if (title && title !== item.title) {
     let slug = slugify(title, { lower: true, strict: true });
@@ -585,6 +588,9 @@ app.put('/admin/articles/:id', requireAuth, uploadArticle.single('image'), h(asy
   if (req.file) {
     removeFileIfLocal(item.image);
     update.image = `/uploads/articles/${req.file.filename}`;
+  } else if (removeImage) {
+    removeFileIfLocal(item.image);
+    update.image = '';
   }
   await db.Articles.update(req.params.id, update);
   req.flash('success', 'Artikel berhasil diperbarui.');
@@ -662,11 +668,14 @@ app.post('/admin/partners', requireAuth, uploadPartner.single('logo'), h(async (
 app.put('/admin/partners/:id', requireAuth, uploadPartner.single('logo'), h(async (req, res) => {
   const item = await db.Partners.find(req.params.id);
   if (!item) { req.flash('error', 'Mitra tidak ditemukan.'); return res.redirect('/admin/partners'); }
-  const { name, description, url } = req.body;
+  const { name, description, url, removeLogo } = req.body;
   let logo = null;
   if (req.file) {
     removeFileIfLocal(item.logo);
     logo = `/uploads/partners/${req.file.filename}`;
+  } else if (removeLogo) {
+    removeFileIfLocal(item.logo);
+    logo = '';
   }
   await db.Partners.update(req.params.id, { name, description, url, logo });
   req.flash('success', 'Data mitra diperbarui.');

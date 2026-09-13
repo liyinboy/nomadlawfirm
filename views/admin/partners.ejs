@@ -31,8 +31,34 @@
         <td><%= p.name %></td>
         <td><%= p.description || '-' %></td>
         <td>
-          <form action="/admin/partners/<%= p.id %>?_method=DELETE" method="POST" data-confirm="Hapus mitra '<%= p.name %>'?">
-            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+          <div class="row-actions">
+            <a href="#" class="btn btn-outline btn-sm" onclick="document.getElementById('edit-<%= p.id %>').style.display='block';return false;">Edit</a>
+            <form action="/admin/partners/<%= p.id %>?_method=DELETE" method="POST" data-confirm="Hapus mitra '<%= p.name %>'?">
+              <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      <tr id="edit-<%= p.id %>" style="display:none;">
+        <td colspan="4">
+          <form action="/admin/partners/<%= p.id %>?_method=PUT" method="POST" enctype="multipart/form-data" style="padding:16px; background:var(--ink-3); border-radius:6px;">
+            <div class="form-grid">
+              <div class="field"><label>Nama Perusahaan</label><input type="text" name="name" value="<%= p.name %>" required></div>
+              <div class="field"><label>Tautan Website (opsional)</label><input type="url" name="url" value="<%= p.url || '' %>" placeholder="https://"></div>
+              <div class="field full"><label>Deskripsi Singkat</label><input type="text" name="description" value="<%= p.description || '' %>"></div>
+              <div class="field full">
+                <label>Ganti Logo</label>
+                <% if (p.logo) { %>
+                <div class="current-photo"><img src="<%= p.logo %>" alt="" style="object-fit:contain;background:#fff;"><span class="hint">Logo saat ini. Unggah file baru untuk menggantinya.</span></div>
+                <label class="checkbox-hint"><input type="checkbox" name="removeLogo" value="1"> Hapus logo ini (tanpa menghapus data mitra)</label>
+                <% } %>
+                <input type="file" name="logo" accept="image/*">
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary btn-sm">Simpan Perubahan</button>
+              <a href="#" class="btn btn-outline btn-sm" onclick="document.getElementById('edit-<%= p.id %>').style.display='none';return false;">Batal</a>
+            </div>
           </form>
         </td>
       </tr>

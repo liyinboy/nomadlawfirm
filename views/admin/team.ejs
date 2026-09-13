@@ -74,7 +74,10 @@
               <div class="field full"><label>Bio Singkat</label><textarea name="bio"><%= m.bio %></textarea></div>
               <div class="field full">
                 <label>Ganti Foto</label>
-                <% if (m.photo) { %><div class="current-photo"><img src="<%= m.photo %>" alt=""><span class="hint">Foto saat ini. Unggah file baru untuk menggantinya.</span></div><% } %>
+                <% if (m.photo) { %>
+                <div class="current-photo"><img src="<%= m.photo %>" alt=""><span class="hint">Foto saat ini. Unggah file baru untuk menggantinya.</span></div>
+                <label class="checkbox-hint"><input type="checkbox" name="removePhoto" value="1"> Hapus foto ini (tanpa menghapus data anggota)</label>
+                <% } %>
                 <input type="file" name="photo" accept="image/*">
               </div>
             </div>

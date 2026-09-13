@@ -15,7 +15,10 @@
       </div>
       <div class="field full">
         <label for="image">Gambar Sampul</label>
-        <% if (article && article.image) { %><div class="current-photo"><img src="<%= article.image %>" alt=""><span class="hint">Gambar saat ini. Unggah file baru untuk menggantinya.</span></div><% } %>
+        <% if (article && article.image) { %>
+        <div class="current-photo"><img src="<%= article.image %>" alt=""><span class="hint">Gambar saat ini. Unggah file baru untuk menggantinya.</span></div>
+        <label class="checkbox-hint"><input type="checkbox" name="removeImage" value="1"> Hapus gambar ini (tanpa menghapus artikel)</label>
+        <% } %>
         <input type="file" id="image" name="image" accept="image/*">
       </div>
     </div>
