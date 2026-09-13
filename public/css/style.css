@@ -249,9 +249,10 @@ h1,h2,h3,h4{ font-family:var(--serif); font-weight:600; line-height:1.15; margin
   /* Di HP, judul/paragraf hero digantikan slider foto, dan tombol aksi disembunyikan */
   .hero-kicker, .hero h1, .hero p, .hero-actions{ display:none; }
 }
-/* Background halaman selain beranda (Tentang Kami, Layanan, dll) tetap tampil di HP */
+/* Background di semua halaman disembunyikan saat diakses di HP */
 @media (max-width:640px){
-  .page-hero.has-bg{ padding:150px 0 70px; }
+  .page-hero.has-bg{ background-image:none !important; padding:150px 0 70px; }
+  .page-hero .hero-overlay{ display:none; }
 }
 
 .hero-mobile-photo{ display:none; }
