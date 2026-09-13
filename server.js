@@ -84,10 +84,20 @@ app.use(session({
 }));
 app.use(flash());
 
+// Cache-busting version for CSS/JS based on file modified time, so browsers/CDNs
+// never serve a stale style.css or main.js after a deploy.
+let ASSET_VERSION = Date.now();
+try {
+  const cssStat = fs.statSync(path.join(__dirname, 'public/css/style.css'));
+  const jsStat = fs.statSync(path.join(__dirname, 'public/js/main.js'));
+  ASSET_VERSION = Math.max(cssStat.mtimeMs, jsStat.mtimeMs) | 0;
+} catch (e) { /* fall back to boot time */ }
+
 // Make settings & flash messages available to every view
 app.use(async (req, res, next) => {
   try {
     res.locals.settings = await db.Settings.get();
+    res.locals.assetVersion = ASSET_VERSION;
     res.locals.currentAdmin = req.session.admin || null;
     res.locals.currentUser = req.session.user || null;
     res.locals.success = req.flash('success');
