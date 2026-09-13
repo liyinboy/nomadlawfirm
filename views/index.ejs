@@ -1,0 +1,293 @@
+<%- include('partials/header') %>
+
+<section class="hero <%= settings.heroImage ? 'has-bg' : '' %>" <% if (settings.heroImage) { %>style="background-image:url('<%= settings.heroImage %>');"<% } %>>
+  <% if (settings.heroImage) { %><div class="hero-overlay"></div><% } %>
+  <div class="container-wide">
+    <div class="hero-inner">
+      <div class="hero-kicker"><span class="rule"></span><span>Advokat &amp; Konsultan Hukum</span></div>
+      <h1><%- settings.heroTitle.replace(/Hukum/, '<em>Hukum</em>') %></h1>
+      <p><%= settings.heroSubtitle %></p>
+      <div class="hero-actions">
+        <a href="/kontak" class="btn btn-primary">Konsultasi Sekarang</a>
+        <a href="/layanan" class="btn btn-outline">Lihat Layanan Kami</a>
+      </div>
+      <% if (settings.heroImage) { %>
+      <div class="hero-mobile-photo"><img src="<%= settings.heroImage %>" alt="Tim <%= settings.officeName %>"></div>
+      <% } %>
+    </div>
+  </div>
+  <div class="scroll-cue"><span>Scroll</span><span class="line"></span></div>
+</section>
+
+<section class="quick-actions">
+  <div class="container-wide">
+    <div class="quick-actions-panel reveal">
+      <a href="/konsultasi" class="qa-tile">
+        <span class="qa-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z"/></svg></span>
+        <span>Konsultasi Chat</span>
+      </a>
+      <a href="/ajukan-kasus" class="qa-tile">
+        <span class="qa-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></span>
+        <span>Ajukan Kasus</span>
+      </a>
+      <a href="/layanan" class="qa-tile">
+        <span class="qa-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18M5 7h14M5 7L2 13a3 3 0 006 0L5 7zM19 7l-3 6a3 3 0 006 0l-3-6z"/></svg></span>
+        <span>Layanan Hukum</span>
+      </a>
+      <a href="/tim-kami" class="qa-tile is-accent">
+        <span class="qa-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="7" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6.5 6.5-6.5s6.5 2.9 6.5 6.5"/><path d="M16 4.5a3.5 3.5 0 010 7M21.5 20c0-2.8-1.9-5.1-4.5-6"/></svg></span>
+        <span>Tim Advokat</span>
+      </a>
+      <a href="/berita" class="qa-tile is-accent">
+        <span class="qa-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h7l4 4v14a1 1 0 01-1 1H7a1 1 0 01-1-1V4a1 1 0 011-1z"/><path d="M14 3v4h4M9 13h6M9 17h6"/></svg></span>
+        <span>Artikel Hukum</span>
+      </a>
+      <a href="/mitra" class="qa-tile is-accent">
+        <span class="qa-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 21V7l8-4 8 4v14M4 21h16M9 21v-6h6v6M9 11h.01M9 15h.01M15 11h.01M15 15h.01"/></svg></span>
+        <span>Mitra</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="trust-strip">
+  <div class="trust-track">
+    <span>Hukum Pidana <em>&middot;</em></span><span>Hukum Perdata <em>&middot;</em></span><span>Hukum Keluarga <em>&middot;</em></span><span>Waris &amp; Gono-Gini <em>&middot;</em></span><span>Hukum Perusahaan <em>&middot;</em></span><span>Konsultasi Hukum <em>&middot;</em></span>
+    <span>Hukum Pidana <em>&middot;</em></span><span>Hukum Perdata <em>&middot;</em></span><span>Hukum Keluarga <em>&middot;</em></span><span>Waris &amp; Gono-Gini <em>&middot;</em></span><span>Hukum Perusahaan <em>&middot;</em></span><span>Konsultasi Hukum <em>&middot;</em></span>
+  </div>
+</div>
+
+<section class="stats-band">
+  <div class="stats-band-crest"><img src="/images/logo.png" alt=""></div>
+  <div class="container-wide">
+    <div class="stats-band-grid reveal">
+      <div class="stats-band-item">
+        <strong><%= settings.totalCasesHandled %><span class="plus">+</span></strong>
+        <span>Total Perkara Ditangani <em>(sejak berdiri s/d <%= settings.statsYear %>)</em></span>
+      </div>
+      <div class="stats-band-divider"></div>
+      <div class="stats-band-item">
+        <strong><%= settings.ongoingCases %></strong>
+        <span>Perkara Sedang Berjalan <em>saat ini</em></span>
+      </div>
+      <div class="stats-band-divider"></div>
+      <div class="stats-band-item">
+        <strong><%= services.length %><span class="plus">+</span></strong>
+        <span>Bidang Layanan Hukum <em>ditangani</em></span>
+      </div>
+      <div class="stats-band-divider"></div>
+      <div class="stats-band-item">
+        <strong>100<span class="plus">%</span></strong>
+        <span>Kerahasiaan &amp; Integritas <em>klien</em></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about-split">
+  <div class="container-wide">
+    <div class="about-grid">
+      <div class="about-media reveal">
+        <div class="frame">
+          <img src="<%= settings.aboutImage || '/images/logo.png' %>" alt="<%= settings.officeName %>">
+        </div>
+        <div class="badge">
+          <img src="/images/logo.png" alt="Logo <%= settings.officeName %>" class="badge-logo">
+          <span><%= settings.shortName %></span>
+        </div>
+      </div>
+      <div class="about-copy reveal reveal-2">
+        <div class="eyebrow">Tentang Kami</div>
+        <h2 class="section-title">Menjaga Hak dan Kepentingan Anda Lewat Langkah Hukum yang Tepat</h2>
+        <p><%= settings.aboutText.split('\n\n')[0] %></p>
+        <div class="pillars">
+          <div class="pillar">
+            <h4>Berintegritas</h4>
+            <p>Kami memegang teguh kejujuran dan kode etik advokat dalam menangani setiap perkara klien.</p>
+          </div>
+          <div class="pillar">
+            <h4>Berpengalaman</h4>
+            <p>Langsung ditangani advokat dan konsultan hukum yang menguasai bidangnya masing-masing.</p>
+          </div>
+        </div>
+        <div style="margin-top:34px;">
+          <a href="/tentang-kami" class="btn-ghost">Selengkapnya Tentang Kami <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="services">
+  <div class="container-wide">
+    <div class="section-head center reveal">
+      <div class="eyebrow center">Bidang Layanan</div>
+      <h2 class="section-title">Layanan Hukum Kami</h2>
+      <p class="section-lead">Dari sesi konsultasi awal sampai perkara tuntas di meja hijau, kami dampingi setiap tahapannya.</p>
+    </div>
+    <div class="service-grid reveal reveal-2">
+      <% services.forEach((s, i) => { %>
+      <div class="service-card">
+        <span class="service-num">0<%= i + 1 %></span>
+        <div class="service-icon"><%- include('partials/icons', {icon: s.icon}) %></div>
+        <h3><%= s.title %></h3>
+        <p><%= s.desc %></p>
+      </div>
+      <% }) %>
+    </div>
+    <div class="services-cta reveal">
+      <a href="/layanan" class="btn btn-outline">Lihat Semua Layanan</a>
+    </div>
+  </div>
+</section>
+
+<section class="team-section">
+  <div class="container-wide">
+    <div class="section-head center reveal">
+      <div class="eyebrow center">Tim Kami</div>
+      <h2 class="section-title">Advokat &amp; Konsultan Hukum</h2>
+      <p class="section-lead">Digawangi advokat-advokat berpengalaman yang berkomitmen penuh mengawal setiap perkara klien.</p>
+    </div>
+    <div class="team-grid reveal reveal-2">
+      <% team.forEach(m => { %>
+      <div class="team-card">
+        <div class="ph <%= !m.photo ? 'empty' : '' %>">
+          <% if (m.photo) { %><img src="<%= m.photo %>" alt="<%= m.name %>">
+          <% } else { %><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg><% } %>
+        </div>
+        <h4><%= m.name %></h4>
+        <span class="title"><%= m.title %></span>
+      </div>
+      <% }) %>
+    </div>
+    <div class="services-cta reveal">
+      <a href="/tim-kami" class="btn btn-outline">Lihat Seluruh Tim</a>
+    </div>
+  </div>
+</section>
+
+<section class="news-section">
+  <div class="container-wide">
+    <div class="section-head center reveal">
+      <div class="eyebrow center">Berita &amp; Artikel</div>
+      <h2 class="section-title">Wawasan &amp; Kabar Terbaru</h2>
+      <p class="section-lead">Catatan seputar dunia hukum, aktivitas firma, dan hal-hal terbaru yang perlu Anda ketahui.</p>
+    </div>
+    <% if (articles.length) { %>
+    <div class="news-grid reveal reveal-2">
+      <% articles.forEach(a => { %>
+      <a href="/berita/<%= a.slug %>" class="news-card">
+        <div class="thumb <%= !a.image ? 'empty' : '' %>">
+          <% if (a.image) { %><img src="<%= a.image %>" alt="<%= a.title %>">
+          <% } else { %><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M7 3h7l4 4v14a1 1 0 01-1 1H7a1 1 0 01-1-1V4a1 1 0 011-1z"/><path d="M14 3v4h4M9 13h6M9 17h6"/></svg><% } %>
+        </div>
+        <div class="body">
+          <span class="news-date"><%= new Date(a.date).toLocaleDateString('id-ID', {day:'numeric', month:'long', year:'numeric'}) %></span>
+          <h3><%= a.title %></h3>
+          <p><%= a.excerpt %></p>
+          <span class="btn-ghost">Baca Selengkapnya <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+      </a>
+      <% }) %>
+    </div>
+    <% } else { %>
+    <div class="empty-state reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M7 3h7l4 4v14a1 1 0 01-1 1H7a1 1 0 01-1-1V4a1 1 0 011-1z"/></svg>
+      <p>Artikel belum tersedia. Nantikan kabar terbaru dari kami.</p>
+    </div>
+    <% } %>
+  </div>
+</section>
+
+<% if (gallery.length) { %>
+<section class="gallery-section">
+  <div class="container-wide">
+    <div class="section-head center reveal">
+      <div class="eyebrow center">Dokumentasi</div>
+      <h2 class="section-title">Galeri Kegiatan</h2>
+    </div>
+    <div class="gallery-grid reveal reveal-2">
+      <% gallery.forEach(g => { %>
+      <div class="gallery-item <%= g.type === 'video' ? 'is-video' : '' %>" data-type="<%= g.type || 'photo' %>" data-video-source="<%= g.videoSource || '' %>" data-full="<%= g.image %>" data-video-id="<%= g.videoId || '' %>" data-video-url="<%= g.videoUrl || '' %>" data-caption="<%= g.caption %>">
+        <% if (g.type === 'video' && g.videoSource === 'upload') { %>
+        <video src="<%= g.videoUrl %>" muted preload="metadata"></video>
+        <% } else { %>
+        <img src="<%= g.image %>" alt="<%= g.caption %>">
+        <% } %>
+        <% if (g.type === 'video') { %><div class="play-badge"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><% } %>
+        <div class="cap"><%= g.caption %></div>
+      </div>
+      <% }) %>
+    </div>
+    <div class="services-cta reveal">
+      <a href="/galeri" class="btn btn-outline">Lihat Semua Galeri</a>
+    </div>
+  </div>
+</section>
+<div class="lightbox">
+  <button class="lb-close" aria-label="Tutup">&times;</button>
+  <img src="" alt="">
+  <div class="lb-video-wrap"><iframe src="" title="Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+  <video class="lb-video-native" controls playsinline></video>
+  <div class="lb-cap"></div>
+</div>
+<% } %>
+
+<% if (partners.length) { %>
+<section class="partners-section">
+  <div class="container-wide">
+    <div class="section-head center reveal">
+      <div class="eyebrow center">Kepercayaan</div>
+      <h2 class="section-title">Mitra Kerja Sama</h2>
+    </div>
+    <div class="partners-grid reveal reveal-2">
+      <% partners.forEach(p => { %>
+      <a href="<%= p.url || '/mitra' %>" target="<%= p.url ? '_blank' : '_self' %>" rel="noopener" class="partner-tile">
+        <% if (p.logo) { %><img src="<%= p.logo %>" alt="<%= p.name %>"><% } else { %><span class="initial"><%= p.name %></span><% } %>
+      </a>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<section class="cta-band">
+  <div class="container">
+    <div class="eyebrow center" style="color:#fff;">Butuh Bantuan Hukum?</div>
+    <h2>Diskusikan Masalah Hukum Anda Bersama Kami</h2>
+    <p>Advokat kami siap mendengarkan cerita Anda dan mencarikan jalan keluar hukum yang tepat serta terjaga kerahasiaannya.</p>
+    <div class="hero-actions" style="justify-content:center;">
+      <a href="https://wa.me/<%= settings.whatsapp %>" target="_blank" rel="noopener" class="btn btn-primary">Chat via WhatsApp</a>
+      <a href="/kontak" class="btn btn-outline">Kirim Pesan</a>
+    </div>
+  </div>
+</section>
+
+<% if (typeof latestVideo !== 'undefined' && latestVideo) { %>
+<div class="video-ad" id="video-ad" data-video-id="<%= latestVideo.id %>" aria-label="Video aktivitas terbaru">
+  <div class="video-ad-head">
+    <span class="video-ad-tag">Video Terbaru</span>
+    <div class="video-ad-actions">
+      <button type="button" class="video-ad-btn" id="video-ad-mute" aria-label="Aktifkan/matikan suara">
+        <svg class="ic-mute" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+        <svg class="ic-unmute" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 010 7M18.5 5.5a9 9 0 010 13"/></svg>
+      </button>
+      <button type="button" class="video-ad-btn" id="video-ad-close" aria-label="Tutup video">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="video-ad-media">
+    <% if (latestVideo.videoSource === 'upload') { %>
+    <video id="video-ad-el" src="<%= latestVideo.videoUrl %>" autoplay muted loop playsinline></video>
+    <% } else { %>
+    <iframe id="video-ad-el"
+      src="https://www.youtube.com/embed/<%= latestVideo.videoId %>?autoplay=1&mute=1&loop=1&playlist=<%= latestVideo.videoId %>&controls=0&modestbranding=1&playsinline=1&rel=0"
+      frameborder="0" allow="autoplay; encrypted-media" allowfullscreen data-video-id="<%= latestVideo.videoId %>"></iframe>
+    <% } %>
+  </div>
+  <% if (latestVideo.caption) { %><a href="/galeri" class="video-ad-caption"><%= latestVideo.caption %></a><% } %>
+</div>
+<% } %>
+
+<%- include('partials/footer') %>

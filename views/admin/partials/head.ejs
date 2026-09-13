@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title><%= title %> | Admin Nomad Law Firm</title>
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<div class="admin-shell">
+  <%- include('./sidebar', {unreadMessages: unreadMessages, unreadConsults: unreadConsults, newCases: newCases}) %>
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <h1><%= title %></h1>
+      <div class="who">Masuk sebagai <strong><%= currentAdmin ? currentAdmin.username : '' %></strong></div>
+    </div>
+    <div class="admin-content">
+      <% if (success && success.length) { %><div class="flash flash-success"><%= success[0] %></div><% } %>
+      <% if (error && error.length) { %><div class="flash flash-error"><%= error[0] %></div><% } %>

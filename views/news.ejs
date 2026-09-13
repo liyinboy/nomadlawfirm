@@ -1,0 +1,52 @@
+<%- include('partials/header') %>
+
+<section class="page-hero <%= settings.heroImage ? 'has-bg' : '' %>" <% if (settings.heroImage) { %>style="background-image:url('<%= settings.heroImage %>');"<% } %>>
+  <% if (settings.heroImage) { %><div class="hero-overlay"></div><% } %>
+  <div class="container">
+    <div class="breadcrumb"><a href="/">Beranda</a><span class="sep">/</span><span>Berita</span></div>
+    <div class="eyebrow">Berita &amp; Artikel</div>
+    <h1>Kabar dan Wawasan Hukum Terbaru</h1>
+    <p>Rangkuman isu hukum, kegiatan firma, dan hal-hal terbaru yang layak Anda simak.</p>
+    <% if (settings.heroImage) { %>
+    <div class="hero-mobile-photo"><img src="<%= settings.heroImage %>" alt="Tim <%= settings.officeName %>"></div>
+    <% } %>
+  </div>
+</section>
+
+<section class="news-section" style="border-top:none; padding-top:90px;">
+  <div class="container-wide">
+    <% if (articles.length) { %>
+    <div class="news-grid reveal">
+      <% articles.forEach(a => { %>
+      <a href="/berita/<%= a.slug %>" class="news-card">
+        <div class="thumb <%= !a.image ? 'empty' : '' %>">
+          <% if (a.image) { %><img src="<%= a.image %>" alt="<%= a.title %>">
+          <% } else { %><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M7 3h7l4 4v14a1 1 0 01-1 1H7a1 1 0 01-1-1V4a1 1 0 011-1z"/><path d="M14 3v4h4M9 13h6M9 17h6"/></svg><% } %>
+        </div>
+        <div class="body">
+          <span class="news-date"><%= new Date(a.date).toLocaleDateString('id-ID', {day:'numeric', month:'long', year:'numeric'}) %></span>
+          <h3><%= a.title %></h3>
+          <p><%= a.excerpt %></p>
+          <span class="btn-ghost">Baca Selengkapnya <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+      </a>
+      <% }) %>
+    </div>
+    <% if (totalPages > 1) { %>
+    <div class="pagination">
+      <% for (let p = 1; p <= totalPages; p++) { %>
+        <% if (p === page) { %><span class="active"><%= p %></span>
+        <% } else { %><a href="/berita?page=<%= p %>"><%= p %></a><% } %>
+      <% } %>
+    </div>
+    <% } %>
+    <% } else { %>
+    <div class="empty-state reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M7 3h7l4 4v14a1 1 0 01-1 1H7a1 1 0 01-1-1V4a1 1 0 011-1z"/></svg>
+      <p>Artikel belum tersedia. Nantikan kabar terbaru dari kami.</p>
+    </div>
+    <% } %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,54 @@
+<%- include('partials/header') %>
+
+<section class="article-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="/">Beranda</a><span class="sep">/</span><a href="/berita">Berita</a><span class="sep">/</span><span>Artikel</span></div>
+    <div class="eyebrow">Artikel</div>
+    <h1><%= article.title %></h1>
+    <div class="article-meta">
+      <span><%= new Date(article.date).toLocaleDateString('id-ID', {day:'numeric', month:'long', year:'numeric'}) %></span>
+      <span>&middot;</span>
+      <span><%= article.author %></span>
+    </div>
+  </div>
+</section>
+
+<% if (article.image) { %>
+<div class="article-cover"><img src="<%= article.image %>" alt="<%= article.title %>"></div>
+<% } %>
+
+<div class="article-body"><%= article.content %></div>
+
+<div class="article-share">
+  <span>Bagikan</span>
+  <a href="https://wa.me/?text=<%= encodeURIComponent(article.title + ' - ' + settings.officeName) %>" target="_blank" rel="noopener" aria-label="Bagikan ke WhatsApp"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.52 0-10 4.48-10 10 0 1.76.46 3.48 1.35 5L2 22l5.15-1.35c1.46.8 3.1 1.22 4.89 1.22 5.52 0 10-4.48 10-10s-4.48-10-10-10zm0 18.15c-1.6 0-3.16-.43-4.52-1.24l-.32-.19-3.05.8.82-2.97-.21-.32A8.13 8.13 0 013.87 12c0-4.5 3.66-8.15 8.17-8.15S20.2 7.5 20.2 12s-3.66 8.15-8.16 8.15z"/></svg></a>
+  <a href="mailto:?subject=<%= encodeURIComponent(article.title) %>" aria-label="Bagikan via Email"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16v16H4z"/><path d="M4 6l8 7 8-7"/></svg></a>
+</div>
+
+<% if (related.length) { %>
+<section class="news-section">
+  <div class="container-wide">
+    <div class="related-heading">
+      <div class="eyebrow center">Baca Juga</div>
+      <h2 class="section-title">Artikel Lainnya</h2>
+    </div>
+    <div class="news-grid" style="margin-top:56px;">
+      <% related.forEach(a => { %>
+      <a href="/berita/<%= a.slug %>" class="news-card">
+        <div class="thumb <%= !a.image ? 'empty' : '' %>">
+          <% if (a.image) { %><img src="<%= a.image %>" alt="<%= a.title %>">
+          <% } else { %><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M7 3h7l4 4v14a1 1 0 01-1 1H7a1 1 0 01-1-1V4a1 1 0 011-1z"/></svg><% } %>
+        </div>
+        <div class="body">
+          <span class="news-date"><%= new Date(a.date).toLocaleDateString('id-ID', {day:'numeric', month:'long', year:'numeric'}) %></span>
+          <h3><%= a.title %></h3>
+          <p><%= a.excerpt %></p>
+        </div>
+      </a>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<%- include('partials/footer') %>

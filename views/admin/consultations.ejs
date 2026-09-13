@@ -1,0 +1,28 @@
+<%- include('partials/head') %>
+
+<div class="admin-card">
+  <div class="toolbar"><h1>Konsultasi Klien (<%= threads.length %>)</h1></div>
+  <div class="table-scroll"><table>
+    <thead><tr><th>Klien</th><th>Topik</th><th>Status</th><th>Pesan Terakhir</th><th></th></tr></thead>
+    <tbody>
+      <% if (!threads.length) { %>
+      <tr><td colspan="5" class="empty-row">Belum ada percakapan konsultasi masuk.</td></tr>
+      <% } %>
+      <% threads.forEach(t => { %>
+      <tr>
+        <td>
+          <strong><%= t.name %></strong>
+          <% if (t.adminUnread) { %><span class="badge" style="margin-left:6px;">Baru</span><% } %>
+          <div style="color:var(--muted-2); font-size:12px;"><%= t.phone || '-' %></div>
+        </td>
+        <td><%= t.topic || 'Umum' %></td>
+        <td><span class="status-pill <%= t.status === 'open' ? 'status-published' : 'status-draft' %>"><%= t.status === 'open' ? 'Berlangsung' : 'Selesai' %></span></td>
+        <td><%= new Date(t.lastMessageAt).toLocaleString('id-ID', {day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'}) %></td>
+        <td><a href="/admin/konsultasi/<%= t.id %>" class="btn btn-outline btn-sm">Buka</a></td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table></div>
+</div>
+
+<%- include('partials/foot') %>

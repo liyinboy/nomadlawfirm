@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Admin | <%= settings.shortName %></title>
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<div class="login-shell">
+  <div class="login-card">
+    <img src="/images/logo.png" alt="Logo">
+    <h1>Admin Panel</h1>
+    <p class="sub"><%= settings.officeName %></p>
+
+    <% if (typeof error !== 'undefined' && error.length) { %><div class="flash flash-error"><%= error[0] %></div><% } %>
+    <% if (typeof success !== 'undefined' && success.length) { %><div class="flash flash-success"><%= success[0] %></div><% } %>
+
+    <form action="/admin/login" method="POST">
+      <div class="field">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required autofocus>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Masuk</button>
+    </form>
+    <a href="/" class="login-back">&larr; Kembali ke Website</a>
+  </div>
+</div>
+</body>
+</html>

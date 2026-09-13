@@ -1,0 +1,101 @@
+<%- include('partials/head') %>
+
+<div class="admin-card">
+  <h2>Tambah Item Galeri</h2>
+  <div style="display:flex; gap:10px; margin-bottom:22px; flex-wrap:wrap;">
+    <button type="button" id="tab-photo" class="btn btn-primary btn-sm" onclick="showTab('photo')">Foto</button>
+    <button type="button" id="tab-video-upload" class="btn btn-outline btn-sm" onclick="showTab('video-upload')">Upload Video</button>
+    <button type="button" id="tab-video-youtube" class="btn btn-outline btn-sm" onclick="showTab('video-youtube')">Link YouTube</button>
+  </div>
+
+  <form action="/admin/gallery" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="type" id="type-input" value="photo">
+    <input type="hidden" name="videoSource" id="videosource-input" value="">
+
+    <div id="panel-photo">
+      <div class="form-grid">
+        <div class="field full"><label for="caption">Keterangan Foto</label><input type="text" id="caption" name="caption" placeholder="Contoh: Sidang Mediasi di Pengadilan Negeri"></div>
+        <div class="field full"><label for="image">Pilih Foto</label><input type="file" id="image" name="image" accept="image/*" required></div>
+      </div>
+    </div>
+
+    <div id="panel-video-upload" style="display:none;">
+      <div class="form-grid">
+        <div class="field full"><label for="captionVideoUpload">Keterangan Video</label><input type="text" id="captionVideoUpload" name="caption" placeholder="Contoh: Dokumentasi Sidang di Pengadilan Negeri"></div>
+        <div class="field full">
+          <label for="video">Pilih File Video</label>
+          <input type="file" id="video" name="video" accept="video/mp4,video/webm,video/quicktime,video/x-matroska,video/x-msvideo">
+          <p class="hint">Format didukung: MP4, WEBM, MOV, MKV, AVI. Maksimal 300MB per video. Video berukuran besar butuh waktu lebih lama untuk terupload, mohon sabar menunggu prosesnya selesai.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="panel-video-youtube" style="display:none;">
+      <div class="form-grid">
+        <div class="field full"><label for="captionVideoYoutube">Keterangan Video</label><input type="text" id="captionVideoYoutube" name="caption" placeholder="Contoh: Dokumentasi Sidang di Pengadilan Negeri"></div>
+        <div class="field full">
+          <label for="videoUrl">Link Video YouTube</label>
+          <input type="url" id="videoUrl" name="videoUrl" placeholder="https://www.youtube.com/watch?v=xxxxxxxx atau https://youtu.be/xxxxxxxx">
+          <p class="hint">Tempel link video dari YouTube (bisa diatur "Tidak Publik/Unlisted" kalau tidak mau muncul di pencarian YouTube).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions"><button type="submit" class="btn btn-primary">Simpan ke Galeri</button></div>
+  </form>
+</div>
+
+<script>
+  function showTab(tab) {
+    const isPhoto = tab === 'photo';
+    const isVideoUpload = tab === 'video-upload';
+    const isVideoYoutube = tab === 'video-youtube';
+
+    document.getElementById('type-input').value = isPhoto ? 'photo' : 'video';
+    document.getElementById('videosource-input').value = isVideoUpload ? 'upload' : (isVideoYoutube ? 'youtube' : '');
+
+    document.getElementById('panel-photo').style.display = isPhoto ? 'block' : 'none';
+    document.getElementById('panel-video-upload').style.display = isVideoUpload ? 'block' : 'none';
+    document.getElementById('panel-video-youtube').style.display = isVideoYoutube ? 'block' : 'none';
+
+    document.getElementById('tab-photo').className = isPhoto ? 'btn btn-primary btn-sm' : 'btn btn-outline btn-sm';
+    document.getElementById('tab-video-upload').className = isVideoUpload ? 'btn btn-primary btn-sm' : 'btn btn-outline btn-sm';
+    document.getElementById('tab-video-youtube').className = isVideoYoutube ? 'btn btn-primary btn-sm' : 'btn btn-outline btn-sm';
+
+    document.getElementById('image').required = isPhoto;
+  }
+</script>
+
+<div class="admin-card">
+  <div class="toolbar"><h1>Galeri (<%= gallery.length %>)</h1></div>
+  <div class="table-scroll"><table>
+    <thead><tr><th>Pratinjau</th><th>Tipe</th><th>Keterangan</th><th>Tanggal</th><th></th></tr></thead>
+    <tbody>
+      <% if (!gallery.length) { %>
+      <tr><td colspan="5" class="empty-row">Belum ada foto atau video kegiatan.</td></tr>
+      <% } %>
+      <% gallery.forEach(g => { %>
+      <tr>
+        <td style="position:relative;">
+          <% if (g.type === 'video' && g.videoSource === 'upload') { %>
+          <video class="table-thumb" src="<%= g.videoUrl %>" muted preload="metadata"></video>
+          <% } else { %>
+          <img class="table-thumb" src="<%= g.image %>" alt="<%= g.caption %>">
+          <% } %>
+          <% if (g.type === 'video') { %><span style="position:absolute; top:14px; left:14px; background:rgba(0,0,0,.7); color:#fff; border-radius:50%; width:20px; height:20px; display:flex; align-items:center; justify-content:center; font-size:10px;">&#9654;</span><% } %>
+        </td>
+        <td><span class="status-pill <%= g.type === 'video' ? 'status-draft' : 'status-published' %>"><%= g.type === 'video' ? (g.videoSource === 'upload' ? 'Video (Upload)' : 'Video (YouTube)') : 'Foto' %></span></td>
+        <td><%= g.caption || '-' %></td>
+        <td><%= new Date(g.date).toLocaleDateString('id-ID', {day:'numeric', month:'short', year:'numeric'}) %></td>
+        <td>
+          <form action="/admin/gallery/<%= g.id %>?_method=DELETE" method="POST" data-confirm="Hapus item ini dari galeri?">
+            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+          </form>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table></div>
+</div>
+
+<%- include('partials/foot') %>

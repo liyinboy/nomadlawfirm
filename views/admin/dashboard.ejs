@@ -1,0 +1,39 @@
+<%- include('partials/head') %>
+
+<div class="stat-grid">
+  <div class="stat-card"><strong><%= counts.team %></strong><span>Anggota Tim</span></div>
+  <div class="stat-card"><strong><%= counts.services %></strong><span>Layanan Hukum</span></div>
+  <div class="stat-card"><strong><%= counts.articles %></strong><span>Artikel</span></div>
+  <div class="stat-card"><strong><%= counts.gallery %></strong><span>Foto Galeri</span></div>
+  <div class="stat-card"><strong><%= counts.partners %></strong><span>Mitra</span></div>
+  <div class="stat-card"><strong><%= counts.messages %></strong><span>Pesan Belum Dibaca</span></div>
+  <div class="stat-card"><strong><%= counts.consults %></strong><span>Konsultasi Belum Dibalas</span></div>
+  <div class="stat-card"><strong><%= counts.cases %></strong><span>Kasus Baru Masuk</span></div>
+</div>
+
+<div class="admin-card">
+  <h2>Selamat Datang di Admin Panel</h2>
+  <p style="color:var(--muted); margin-bottom:22px;">Kelola seluruh konten website NOMAD LAW FIRM langsung dari sini, tanpa perlu mengedit kode program.</p>
+  <div style="display:flex; gap:14px; flex-wrap:wrap;">
+    <a href="/admin/team" class="btn btn-outline">+ Tambah Anggota Tim</a>
+    <a href="/admin/services" class="btn btn-outline">+ Kelola Layanan Hukum</a>
+    <a href="/admin/articles/new" class="btn btn-outline">+ Tulis Artikel</a>
+    <a href="/admin/gallery" class="btn btn-outline">+ Unggah Foto Kegiatan</a>
+    <a href="/admin/partners" class="btn btn-outline">+ Tambah Mitra</a>
+    <a href="/admin/konsultasi" class="btn btn-outline">+ Balas Konsultasi Klien</a>
+    <a href="/admin/kasus" class="btn btn-outline">+ Tinjau Kasus Masuk</a>
+  </div>
+</div>
+
+<div class="admin-card">
+  <h2>Panduan Singkat</h2>
+  <p style="color:var(--muted); margin-bottom:0;">
+    1. Menu <strong>Tim Kami</strong> untuk menambah/mengubah foto &amp; identitas advokat.<br>
+    2. Menu <strong>Artikel &amp; Berita</strong> untuk mempublikasikan tulisan yang tampil di halaman Berita.<br>
+    3. Menu <strong>Galeri Kegiatan</strong> untuk mengunggah dokumentasi kegiatan kantor.<br>
+    4. Menu <strong>Mitra Perusahaan</strong> untuk menambahkan perusahaan yang menjadi klien legal Anda (mis. FIFGROUP).<br>
+    5. Menu <strong>Pengaturan</strong> untuk mengubah info kontak, sosial media, dan password admin.
+  </p>
+</div>
+
+<%- include('partials/foot') %>

@@ -1,0 +1,103 @@
+<%- include('partials/header') %>
+
+<section class="app-page">
+  <div class="container-wide app-page-inner">
+
+    <div class="app-page-head reveal">
+      <div class="eyebrow">Ruang Konsultasi</div>
+      <h1 class="section-title">Konsultasi Cepat Bersama Advokat Kami</h1>
+      <p class="section-lead">Ceritakan permasalahan Anda secara singkat. Advokat kami akan membalas langsung di ruang obrolan ini &mdash; tidak perlu mengunduh aplikasi tambahan.</p>
+    </div>
+
+    <% if (success && success.length) { %><div class="flash flash-success"><%= success[0] %></div><% } %>
+    <% if (error && error.length) { %><div class="flash flash-error"><%= error[0] %></div><% } %>
+
+    <% if (!thread) { %>
+    <div class="form-card chat-start-card reveal reveal-2">
+      <h3 style="font-size:20px; margin-bottom:8px;">Mulai Konsultasi Baru</h3>
+      <p style="color:var(--muted); font-size:14px; margin-bottom:26px;">Percakapan bersifat rahasia. Balasan advokat akan muncul di halaman ini &mdash; cukup buka kembali kapan saja.</p>
+      <form action="/konsultasi/mulai" method="POST">
+        <div class="form-row">
+          <div class="field"><label for="name">Nama Anda</label><input type="text" id="name" name="name" required></div>
+          <div class="field"><label for="phone">No. WhatsApp</label><input type="tel" id="phone" name="phone" placeholder="08xxxxxxxxxx"></div>
+        </div>
+        <div class="field">
+          <label for="topic">Topik Hukum</label>
+          <select id="topic" name="topic">
+            <option value="">Pilih topik (opsional)</option>
+            <option>Hukum Pidana</option>
+            <option>Hukum Perdata</option>
+            <option>Hukum Keluarga / Perceraian</option>
+            <option>Waris &amp; Gono-Gini</option>
+            <option>Hukum Perusahaan</option>
+            <option>Lainnya</option>
+          </select>
+        </div>
+        <div class="field"><label for="message">Pertanyaan / Ringkasan Masalah</label><textarea id="message" name="message" required placeholder="Contoh: Saya ingin bertanya soal proses gugatan cerai..."></textarea></div>
+        <button type="submit" class="btn btn-primary btn-block">Mulai Konsultasi</button>
+      </form>
+    </div>
+    <% } else { %>
+    <div class="chat-shell reveal reveal-2" data-thread-status="<%= thread.status %>">
+      <div class="chat-shell-head">
+        <div>
+          <strong><%= thread.topic || 'Konsultasi Umum' %></strong>
+          <span class="chat-status-pill <%= thread.status === 'open' ? 'is-open' : 'is-closed' %>"><%= thread.status === 'open' ? 'Sedang Berlangsung' : 'Selesai' %></span>
+        </div>
+        <a href="https://wa.me/<%= settings.whatsapp %>" target="_blank" rel="noopener" class="chat-wa-fallback">Butuh cepat? WhatsApp</a>
+      </div>
+      <div class="chat-window" id="chat-window">
+        <% messages.forEach(m => { %>
+        <div class="chat-bubble <%= m.sender === 'client' ? 'from-client' : 'from-admin' %>" data-msg-id="<%= m.id %>">
+          <span class="who"><%= m.sender === 'client' ? 'Anda' : 'Advokat' %></span>
+          <p><%= m.body %></p>
+          <span class="time"><%= new Date(m.sentAt).toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'}) %></span>
+        </div>
+        <% }) %>
+      </div>
+      <% if (thread.status === 'open') { %>
+      <form class="chat-input-row" id="chat-form" action="/konsultasi/kirim" method="POST">
+        <input type="text" name="message" id="chat-input" placeholder="Tulis pesan Anda..." autocomplete="off" required>
+        <button type="submit" aria-label="Kirim">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </form>
+      <% } else { %>
+      <div class="chat-closed-note">Percakapan ini sudah ditandai selesai oleh advokat kami. Terima kasih sudah berkonsultasi &mdash; silakan mulai percakapan baru di bawah ini bila ada pertanyaan lain.</div>
+      <% } %>
+    </div>
+
+    <% if (thread.status !== 'open') { %>
+    <div class="form-card chat-start-card reveal reveal-2" style="margin-top:26px;">
+      <h3 style="font-size:18px; margin-bottom:20px;">Mulai Konsultasi Baru</h3>
+      <form action="/konsultasi/mulai" method="POST">
+        <div class="form-row">
+          <div class="field"><label for="name2">Nama Anda</label><input type="text" id="name2" name="name" value="<%= thread.name %>" required></div>
+          <div class="field"><label for="phone2">No. WhatsApp</label><input type="tel" id="phone2" name="phone" value="<%= thread.phone %>" placeholder="08xxxxxxxxxx"></div>
+        </div>
+        <div class="field">
+          <label for="topic2">Topik Hukum</label>
+          <select id="topic2" name="topic">
+            <option value="">Pilih topik (opsional)</option>
+            <option>Hukum Pidana</option>
+            <option>Hukum Perdata</option>
+            <option>Hukum Keluarga / Perceraian</option>
+            <option>Waris &amp; Gono-Gini</option>
+            <option>Hukum Perusahaan</option>
+            <option>Lainnya</option>
+          </select>
+        </div>
+        <div class="field"><label for="message2">Pertanyaan / Ringkasan Masalah</label><textarea id="message2" name="message" required placeholder="Tulis pertanyaan baru Anda di sini..."></textarea></div>
+        <button type="submit" class="btn btn-primary btn-block">Mulai Konsultasi</button>
+      </form>
+    </div>
+    <% } %>
+    <% } %>
+  </div>
+</section>
+
+<script>
+  window.__chatThread = <%- thread ? JSON.stringify({ id: thread.id, status: thread.status, lastMsgId: messages.length ? messages[messages.length - 1].id : null }) : 'null' %>;
+</script>
+
+<%- include('partials/footer') %>

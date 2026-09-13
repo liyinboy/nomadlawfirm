@@ -1,0 +1,58 @@
+<%- include('partials/header') %>
+
+<section class="page-hero <%= settings.heroImage ? 'has-bg' : '' %>" <% if (settings.heroImage) { %>style="background-image:url('<%= settings.heroImage %>');"<% } %>>
+  <% if (settings.heroImage) { %><div class="hero-overlay"></div><% } %>
+  <div class="container">
+    <div class="breadcrumb"><a href="/">Beranda</a><span class="sep">/</span><span>Layanan</span></div>
+    <div class="eyebrow">Bidang Layanan</div>
+    <h1>Cakupan Layanan Hukum Kami</h1>
+    <p>Pendampingan hukum kami mencakup konsultasi awal, negosiasi, mediasi, sampai proses litigasi di pengadilan.</p>
+    <% if (settings.heroImage) { %>
+    <div class="hero-mobile-photo"><img src="<%= settings.heroImage %>" alt="Tim <%= settings.officeName %>"></div>
+    <% } %>
+  </div>
+</section>
+
+<section class="services" style="border-top:none;">
+  <div class="container-wide">
+    <div class="service-grid reveal">
+      <% services.forEach((s, i) => { %>
+      <div class="service-card">
+        <span class="service-num">0<%= i + 1 %></span>
+        <div class="service-icon"><%- include('partials/icons', {icon: s.icon}) %></div>
+        <h3><%= s.title %></h3>
+        <p><%= s.desc %></p>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="about-split">
+  <div class="container-wide">
+    <div class="section-head center reveal">
+      <div class="eyebrow center">Alur Layanan</div>
+      <h2 class="section-title">Tahapan Penanganan Perkara di Firma Kami</h2>
+    </div>
+    <div class="timeline-values reveal reveal-2">
+      <div class="tv-item"><span>01</span><h4>Konsultasi Awal</h4><p>Ceritakan persoalan Anda secara rahasia kepada tim kami, bisa tatap muka atau lewat WhatsApp.</p></div>
+      <div class="tv-item"><span>02</span><h4>Kajian &amp; Strategi</h4><p>Tim kami mempelajari duduk perkara lalu merancang langkah hukum yang paling sesuai.</p></div>
+      <div class="tv-item"><span>03</span><h4>Pendampingan</h4><p>Advokat kami hadir mendampingi Anda di setiap tahap, dari negosiasi hingga persidangan.</p></div>
+      <div class="tv-item"><span>04</span><h4>Penyelesaian</h4><p>Kami kawal perkara sampai tuntas demi hasil yang menjaga kepentingan Anda.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="container">
+    <div class="eyebrow center" style="color:#fff;">Konsultasi Gratis</div>
+    <h2>Ceritakan Masalah Hukum Anda Mulai Hari Ini</h2>
+    <p>Semakin awal ditangani, semakin terbuka peluang penyelesaian yang menguntungkan pihak Anda.</p>
+    <div class="hero-actions" style="justify-content:center;">
+      <a href="https://wa.me/<%= settings.whatsapp %>" target="_blank" rel="noopener" class="btn btn-primary">Chat via WhatsApp</a>
+      <a href="/kontak" class="btn btn-outline">Kirim Pesan</a>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

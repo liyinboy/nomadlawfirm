@@ -1,0 +1,95 @@
+<footer class="site-footer">
+  <div class="container-wide">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="brand">
+          <img src="/images/logo.png" alt="Logo <%= settings.officeName %>">
+          <div class="brand-text">
+            <strong>NOMAD LAW FIRM</strong>
+            <span><%= settings.tagline %></span>
+          </div>
+        </a>
+        <p><%= settings.officeName %> adalah pendamping hukum yang teliti, konsisten, dan menjunjung kepentingan setiap klien.</p>
+        <div class="footer-social">
+          <% if (settings.instagram) { %><a href="https://instagram.com/<%= settings.instagram %>" target="_blank" rel="noopener" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.31-1.46.72-2.13 1.38C1.35 2.67.94 3.34.63 4.14.33 4.9.14 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.79.72 1.46 1.38 2.13.66.66 1.34 1.07 2.13 1.38.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56.79-.31 1.46-.72 2.13-1.38.66-.66 1.07-1.34 1.38-2.13.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91-.31-.79-.72-1.46-1.38-2.13C21.33 1.35 20.66.94 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 12 18.16 6.16 6.16 0 0 0 12 5.84zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.4a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z"/></svg></a><% } %>
+          <% if (settings.tiktok) { %><a href="https://tiktok.com/@<%= settings.tiktok %>" target="_blank" rel="noopener" aria-label="TikTok"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 5.82c-1-.87-1.68-2.1-1.87-3.5h-3.14v13.3c0 1.6-1.3 2.9-2.9 2.9a2.9 2.9 0 0 1 0-5.8c.29 0 .57.04.83.12V9.58a6.13 6.13 0 0 0-.83-.06 6.09 6.09 0 1 0 6.09 6.09V9.5a9.2 9.2 0 0 0 5.31 1.69V8.05c-1.24 0-2.4-.37-3.49-1.23z"/></svg></a><% } %>
+          <a href="https://wa.me/<%= settings.whatsapp %>" target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.52 0-10 4.48-10 10 0 1.76.46 3.48 1.35 5L2 22l5.15-1.35c1.46.8 3.1 1.22 4.89 1.22 5.52 0 10-4.48 10-10s-4.48-10-10-10zm0 18.15c-1.6 0-3.16-.43-4.52-1.24l-.32-.19-3.05.8.82-2.97-.21-.32A8.13 8.13 0 013.87 12c0-4.5 3.66-8.15 8.17-8.15S20.2 7.5 20.2 12s-3.66 8.15-8.16 8.15z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Navigasi</h5>
+        <ul>
+          <li><a href="/tentang-kami">Tentang Kami</a></li>
+          <li><a href="/layanan">Layanan Hukum</a></li>
+          <li><a href="/tim-kami">Tim Kami</a></li>
+          <li><a href="/berita">Berita &amp; Artikel</a></li>
+          <li><a href="/galeri">Galeri Kegiatan</a></li>
+          <li><a href="/mitra">Mitra Kerja Sama</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Layanan</h5>
+        <ul>
+          <li><a href="/layanan">Hukum Pidana</a></li>
+          <li><a href="/layanan">Hukum Perdata</a></li>
+          <li><a href="/layanan">Hukum Keluarga</a></li>
+          <li><a href="/layanan">Waris &amp; Gono-Gini</a></li>
+          <li><a href="/layanan">Hukum Perusahaan</a></li>
+          <li><a href="/layanan">Hukum Islam</a></li>
+          <li><a href="/layanan">Hukum Waris</a></li>
+          <li><a href="/layanan">Perceraian</a></li>
+          <li><a href="/layanan">Kepailitan</a></li>
+          <li><a href="/layanan">Hak Kekayaan Intelektual</a></li>
+          <li><a href="/layanan">Legal Due Diligence</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Kontak Kami</h5>
+        <ul>
+          <li><a href="tel:<%= settings.phone %>"><%= settings.phoneDisplay || settings.phone %></a></li>
+          <li><a href="mailto:<%= settings.email %>"><%= settings.email %></a></li>
+          <li><a href="/kontak">Kirim Pesan</a></li>
+          <li><% if (settings.mapUrl) { %><a href="<%= settings.mapUrl %>" target="_blank" rel="noopener"><%= settings.address %></a><% } else { %><span><%= settings.address %></span><% } %></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; <%= new Date().getFullYear() %> <%= settings.officeName %>. Seluruh hak cipta dilindungi.</p>
+      <p class="credit">Advokat &amp; Konsultan Hukum · Indonesia</p>
+    </div>
+  </div>
+</footer>
+
+<nav class="bottom-nav" aria-label="Navigasi Aplikasi">
+  <a href="/" class="bn-item <%= currentPath === '/' ? 'active' : '' %>">
+    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
+    <span>Beranda</span>
+  </a>
+  <a href="/layanan" class="bn-item <%= currentPath === '/layanan' ? 'active' : '' %>">
+    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18M5 7h14M5 7L2 13a3 3 0 006 0L5 7zM19 7l-3 6a3 3 0 006 0l-3-6z"/></svg>
+    <span>Layanan</span>
+  </a>
+  <a href="/konsultasi" class="bn-item bn-main <%= currentPath === '/konsultasi' ? 'active' : '' %>">
+    <span class="bn-main-circle">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z"/></svg>
+    </span>
+    <span>Konsultasi</span>
+  </a>
+  <a href="/ajukan-kasus" class="bn-item <%= currentPath === '/ajukan-kasus' ? 'active' : '' %>">
+    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+    <span>Ajukan Kasus</span>
+  </a>
+  <button type="button" class="bn-item" id="bn-menu-btn">
+    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg>
+    <span>Menu</span>
+  </button>
+</nav>
+
+<a href="https://wa.me/<%= settings.whatsapp %>?text=Halo%2C%20saya%20ingin%20berkonsultasi%20hukum" target="_blank" rel="noopener" class="wa-float" aria-label="Chat WhatsApp">
+  <span class="ping"></span>
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.52 0-10 4.48-10 10 0 1.76.46 3.48 1.35 5L2 22l5.15-1.35c1.46.8 3.1 1.22 4.89 1.22 5.52 0 10-4.48 10-10s-4.48-10-10-10zm0 18.15c-1.6 0-3.16-.43-4.52-1.24l-.32-.19-3.05.8.82-2.97-.21-.32A8.13 8.13 0 013.87 12c0-4.5 3.66-8.15 8.17-8.15S20.2 7.5 20.2 12s-3.66 8.15-8.16 8.15zm4.47-6.1c-.24-.12-1.44-.71-1.67-.79-.22-.08-.38-.12-.55.12-.16.24-.63.79-.77.95-.14.16-.28.18-.53.06-.24-.12-1.02-.38-1.95-1.21-.72-.64-1.2-1.44-1.35-1.68-.14-.24-.02-.37.11-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.55-1.34-.76-1.83-.2-.48-.4-.42-.55-.42-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.44-.59 1.64-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.46-.28z"/></svg>
+</a>
+
+<script src="/js/main.js"></script>
+</body>
+</html>

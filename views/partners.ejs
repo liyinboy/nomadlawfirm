@@ -1,0 +1,52 @@
+<%- include('partials/header') %>
+
+<section class="page-hero <%= settings.heroImage ? 'has-bg' : '' %>" <% if (settings.heroImage) { %>style="background-image:url('<%= settings.heroImage %>');"<% } %>>
+  <% if (settings.heroImage) { %><div class="hero-overlay"></div><% } %>
+  <div class="container">
+    <div class="breadcrumb"><a href="/">Beranda</a><span class="sep">/</span><span>Mitra</span></div>
+    <div class="eyebrow">Kepercayaan</div>
+    <h1>Jaringan Mitra Kerja Sama</h1>
+    <p>Perusahaan dan lembaga yang telah menjalin kerja sama legal bersama kami.</p>
+    <% if (settings.heroImage) { %>
+    <div class="hero-mobile-photo"><img src="<%= settings.heroImage %>" alt="Tim <%= settings.officeName %>"></div>
+    <% } %>
+  </div>
+</section>
+
+<section class="partners-section" style="border-top:none; padding-top:90px;">
+  <div class="container-wide">
+    <% if (partners.length) { %>
+    <div class="partner-cards reveal">
+      <% partners.forEach(p => { %>
+      <div class="partner-card">
+        <div class="logo-wrap">
+          <% if (p.logo) { %><img src="<%= p.logo %>" alt="<%= p.name %>">
+          <% } else { %><span style="font-family:var(--serif); font-size:22px; color:var(--muted);"><%= p.name %></span><% } %>
+        </div>
+        <h4><%= p.name %></h4>
+        <% if (p.description) { %><p><%= p.description %></p><% } %>
+        <% if (p.url) { %><a href="<%= p.url %>" target="_blank" rel="noopener" class="btn-ghost" style="margin-top:14px; display:inline-flex;">Kunjungi <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></a><% } %>
+      </div>
+      <% }) %>
+    </div>
+    <% } else { %>
+    <div class="empty-state reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="7" width="18" height="13" rx="1"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+      <p>Data mitra kerja sama belum tersedia.</p>
+    </div>
+    <% } %>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="container">
+    <div class="eyebrow center" style="color:#fff;">Kerja Sama</div>
+    <h2>Jalin Kerja Sama Legal Bersama Kami</h2>
+    <p>Kami terbuka untuk kerja sama jangka panjang dalam pengurusan legalitas dan pendampingan hukum korporasi.</p>
+    <div class="hero-actions" style="justify-content:center;">
+      <a href="/kontak" class="btn btn-primary">Ajukan Kerja Sama</a>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

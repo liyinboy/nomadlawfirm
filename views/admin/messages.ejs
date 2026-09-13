@@ -1,0 +1,35 @@
+<%- include('partials/head') %>
+
+<div class="admin-card">
+  <div class="toolbar"><h1>Pesan Masuk (<%= messages.length %>)</h1></div>
+  <div class="table-scroll"><table>
+    <thead><tr><th>Nama</th><th>Kontak</th><th>Subjek</th><th>Pesan</th><th>Tanggal</th><th></th></tr></thead>
+    <tbody>
+      <% if (!messages.length) { %>
+      <tr><td colspan="6" class="empty-row">Belum ada pesan masuk dari formulir kontak.</td></tr>
+      <% } %>
+      <% messages.forEach(m => { %>
+      <tr>
+        <td><%= m.name %></td>
+        <td>
+          <% if (m.phone) { %><div><%= m.phone %></div><% } %>
+          <% if (m.email) { %><div style="color:var(--muted-2); font-size:12px;"><%= m.email %></div><% } %>
+        </td>
+        <td><%= m.subject || '-' %></td>
+        <td style="max-width:280px;"><%= m.message %></td>
+        <td><%= new Date(m.date).toLocaleDateString('id-ID', {day:'numeric', month:'short', year:'numeric'}) %></td>
+        <td>
+          <div class="row-actions">
+            <% if (m.phone) { %><a href="https://wa.me/<%= m.phone.replace(/[^0-9]/g,'') %>" target="_blank" class="btn btn-outline btn-sm">Balas</a><% } %>
+            <form action="/admin/messages/<%= m.id %>?_method=DELETE" method="POST" data-confirm="Hapus pesan dari <%= m.name %>?">
+              <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table></div>
+</div>
+
+<%- include('partials/foot') %>

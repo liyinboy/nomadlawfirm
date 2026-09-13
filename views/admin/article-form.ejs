@@ -1,0 +1,29 @@
+<%- include('partials/head') %>
+
+<div class="admin-card">
+  <form action="<%= article ? '/admin/articles/' + article.id + '?_method=PUT' : '/admin/articles' %>" method="POST" enctype="multipart/form-data">
+    <div class="form-grid">
+      <div class="field full"><label for="title">Judul Artikel</label><input type="text" id="title" name="title" value="<%= article ? article.title : '' %>" required></div>
+      <div class="field full"><label for="excerpt">Ringkasan Singkat</label><textarea id="excerpt" name="excerpt" placeholder="Ringkasan yang tampil pada daftar berita (1-2 kalimat)..." style="min-height:70px;"><%= article ? article.excerpt : '' %></textarea></div>
+      <div class="field full"><label for="content">Isi Artikel</label><textarea id="content" name="content" style="min-height:280px;" required><%= article ? article.content : '' %></textarea><p class="hint">Tulis isi artikel secara lengkap. Setiap baris baru akan otomatis menjadi paragraf baru.</p></div>
+      <div class="field"><label for="author">Penulis</label><input type="text" id="author" name="author" value="<%= article ? article.author : settings.officeName %>"></div>
+      <div class="field">
+        <label class="checkbox-field" style="margin-top:14px;">
+          <input type="checkbox" name="published" <%= (!article || article.published) ? 'checked' : '' %>>
+          <span>Tayangkan artikel ini di website</span>
+        </label>
+      </div>
+      <div class="field full">
+        <label for="image">Gambar Sampul</label>
+        <% if (article && article.image) { %><div class="current-photo"><img src="<%= article.image %>" alt=""><span class="hint">Gambar saat ini. Unggah file baru untuk menggantinya.</span></div><% } %>
+        <input type="file" id="image" name="image" accept="image/*">
+      </div>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary"><%= article ? 'Simpan Perubahan' : 'Publikasikan Artikel' %></button>
+      <a href="/admin/articles" class="btn btn-outline">Batal</a>
+    </div>
+  </form>
+</div>
+
+<%- include('partials/foot') %>

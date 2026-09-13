@@ -1,0 +1,38 @@
+<%- include('partials/head') %>
+
+<div class="toolbar">
+  <h1>Artikel &amp; Berita (<%= articles.length %>)</h1>
+  <a href="/admin/articles/new" class="btn btn-primary">+ Tulis Artikel Baru</a>
+</div>
+
+<div class="admin-card">
+  <div class="table-scroll"><table>
+    <thead><tr><th>Cover</th><th>Judul</th><th>Tanggal</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+      <% if (!articles.length) { %>
+      <tr><td colspan="5" class="empty-row">Belum ada artikel. Klik "Tulis Artikel Baru" untuk memulai.</td></tr>
+      <% } %>
+      <% articles.forEach(a => { %>
+      <tr>
+        <td>
+          <% if (a.image) { %><img class="table-thumb" src="<%= a.image %>" alt="<%= a.title %>">
+          <% } else { %><div class="table-thumb" style="display:flex;align-items:center;justify-content:center;color:var(--muted-2);font-size:10px;">Kosong</div><% } %>
+        </td>
+        <td><%= a.title %></td>
+        <td><%= new Date(a.date).toLocaleDateString('id-ID', {day:'numeric', month:'short', year:'numeric'}) %></td>
+        <td><span class="status-pill <%= a.published ? 'status-published' : 'status-draft' %>"><%= a.published ? 'Tayang' : 'Draf' %></span></td>
+        <td>
+          <div class="row-actions">
+            <a href="/admin/articles/<%= a.id %>/edit" class="btn btn-outline btn-sm">Edit</a>
+            <form action="/admin/articles/<%= a.id %>?_method=DELETE" method="POST" data-confirm="Hapus artikel '<%= a.title %>'?">
+              <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table></div>
+</div>
+
+<%- include('partials/foot') %>

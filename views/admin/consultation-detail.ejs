@@ -1,0 +1,42 @@
+<%- include('partials/head') %>
+
+<div class="admin-card">
+  <div class="toolbar">
+    <h1><%= thread.name %> &middot; <%= thread.topic || 'Umum' %></h1>
+    <div style="display:flex; gap:10px;">
+      <a href="/admin/konsultasi" class="btn btn-outline btn-sm">&larr; Kembali</a>
+      <% if (thread.status === 'open') { %>
+      <form action="/admin/konsultasi/<%= thread.id %>/tutup" method="POST" data-confirm="Tandai percakapan ini selesai?">
+        <button type="submit" class="btn btn-danger btn-sm">Tandai Selesai</button>
+      </form>
+      <% } %>
+    </div>
+  </div>
+
+  <div style="display:flex; gap:20px; flex-wrap:wrap; margin-bottom:22px; font-size:13px; color:var(--muted);">
+    <span>No. WhatsApp: <strong style="color:var(--cream);"><%= thread.phone || '-' %></strong></span>
+    <% if (thread.phone) { %><a href="https://wa.me/<%= thread.phone.replace(/[^0-9]/g,'') %>" target="_blank" class="btn-ghost" style="font-size:12.5px;">Hubungi via WhatsApp</a><% } %>
+  </div>
+
+  <div class="admin-chat-window">
+    <% if (!messages.length) { %><div class="empty-row">Belum ada pesan.</div><% } %>
+    <% messages.forEach(m => { %>
+    <div class="admin-chat-bubble <%= m.sender === 'admin' ? 'from-admin' : 'from-client' %>">
+      <span class="who"><%= m.sender === 'admin' ? 'Anda (Admin)' : thread.name %></span>
+      <p><%= m.body %></p>
+      <span class="time"><%= new Date(m.sentAt).toLocaleString('id-ID', {day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'}) %></span>
+    </div>
+    <% }) %>
+  </div>
+
+  <% if (thread.status === 'open') { %>
+  <form action="/admin/konsultasi/<%= thread.id %>/balas" method="POST" class="admin-chat-reply">
+    <textarea name="message" placeholder="Tulis balasan untuk klien..." required></textarea>
+    <button type="submit" class="btn btn-primary">Kirim Balasan</button>
+  </form>
+  <% } else { %>
+  <p style="color:var(--muted); margin-top:10px;">Percakapan ini sudah ditutup.</p>
+  <% } %>
+</div>
+
+<%- include('partials/foot') %>

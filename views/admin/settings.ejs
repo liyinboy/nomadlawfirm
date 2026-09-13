@@ -1,0 +1,89 @@
+<%- include('partials/head') %>
+
+<div class="admin-card">
+  <h2>Informasi Kantor</h2>
+  <form action="/admin/settings" method="POST" enctype="multipart/form-data">
+    <div class="form-grid">
+      <div class="field full"><label>Nama Kantor</label><input type="text" name="officeName" value="<%= settings.officeName %>" required></div>
+      <div class="field"><label>Nama Singkat</label><input type="text" name="shortName" value="<%= settings.shortName %>"></div>
+      <div class="field"><label>Tagline</label><input type="text" name="tagline" value="<%= settings.tagline %>"></div>
+      <div class="field full"><label>Judul Hero (Beranda)</label><input type="text" name="heroTitle" value="<%= settings.heroTitle %>"></div>
+      <div class="field full"><label>Subjudul Hero (Beranda)</label><textarea name="heroSubtitle"><%= settings.heroSubtitle %></textarea></div>
+      <div class="field full">
+        <label>Foto Latar Beranda (Hero)</label>
+        <% if (settings.heroImage) { %>
+        <div class="current-photo">
+          <img src="<%= settings.heroImage %>" alt="Foto latar beranda saat ini" style="width:110px; height:70px; object-fit:cover;">
+          <span class="hint">Foto saat ini. Unggah foto baru untuk menggantinya, tampil otomatis dalam format landscape di halaman Beranda.</span>
+        </div>
+        <% } %>
+        <input type="file" name="heroImage" accept="image/*" data-preview="#hero-preview">
+        <img id="hero-preview" src="" alt="" style="display:none; width:110px; height:70px; object-fit:cover; margin-top:10px; border:1px solid var(--line-strong); border-radius:4px;">
+        <p class="hint">Disarankan foto beresolusi tinggi (landscape maupun potret sama-sama bisa, sistem akan otomatis memotong ke tampilan landscape). Foto ini khusus untuk latar Beranda, misalnya foto bersama tim.</p>
+      </div>
+      <div class="field full">
+        <label>Foto Managing Partner (Tentang Kami &amp; Profil Firma)</label>
+        <% if (settings.aboutImage) { %>
+        <div class="current-photo">
+          <img src="<%= settings.aboutImage %>" alt="Foto Managing Partner saat ini" style="width:90px; height:110px; object-fit:cover;">
+          <span class="hint">Foto saat ini. Unggah foto baru untuk menggantinya.</span>
+        </div>
+        <% } %>
+        <input type="file" name="aboutImage" accept="image/*" data-preview="#about-preview">
+        <img id="about-preview" src="" alt="" style="display:none; width:90px; height:110px; object-fit:cover; margin-top:10px; border:1px solid var(--line-strong); border-radius:4px;">
+        <p class="hint">Foto ini tampil di bagian "Tentang Kami" (Beranda) dan halaman Profil Firma. Disarankan foto potret Managing Partner, terpisah dari foto latar Beranda.</p>
+      </div>
+      <div class="field full"><label>Teks Tentang Kami</label><textarea name="aboutText" style="min-height:160px;"><%= settings.aboutText %></textarea></div>
+      <div class="field full"><label>Visi</label><textarea name="visionText"><%= settings.visionText %></textarea></div>
+      <div class="field full"><label>Misi</label><textarea name="missionText"><%= settings.missionText %></textarea></div>
+    </div>
+
+    <h2 style="margin-top:10px;">Kontak</h2>
+    <div class="form-grid">
+      <div class="field"><label>Nomor HP / WhatsApp (format 62xxx)</label><input type="text" name="whatsapp" value="<%= settings.whatsapp %>"></div>
+      <div class="field"><label>Nomor Telepon (untuk link telepon)</label><input type="text" name="phone" value="<%= settings.phone %>"></div>
+      <div class="field"><label>Nomor Telepon (tampilan)</label><input type="text" name="phoneDisplay" value="<%= settings.phoneDisplay %>"></div>
+      <div class="field"><label>Email</label><input type="email" name="email" value="<%= settings.email %>"></div>
+      <div class="field full"><label>Alamat Kantor</label><input type="text" name="address" value="<%= settings.address %>"></div>
+      <div class="field"><label>Jam Operasional</label><input type="text" name="operationalHours" value="<%= settings.operationalHours %>"></div>
+    </div>
+
+    <h2 style="margin-top:10px;">Statistik Perkara</h2>
+    <p style="color:var(--muted); margin-top:-14px; margin-bottom:22px; font-size:13.5px;">Angka ini tampil di halaman Beranda. Perbarui kapan saja saat jumlah perkara bertambah, tidak perlu edit kode.</p>
+    <div class="form-grid">
+      <div class="field"><label>Total Perkara Ditangani</label><input type="number" name="totalCasesHandled" value="<%= settings.totalCasesHandled %>" min="0" required></div>
+      <div class="field"><label>Dihitung Sejak Berdiri s/d Tahun</label><input type="number" name="statsYear" value="<%= settings.statsYear %>" min="2000" max="2100" required></div>
+      <div class="field"><label>Perkara Sedang Berjalan</label><input type="number" name="ongoingCases" value="<%= settings.ongoingCases %>" min="0" required></div>
+    </div>
+
+    <h2 style="margin-top:10px;">Media Sosial</h2>
+    <div class="form-grid">
+      <div class="field"><label>Username Instagram (tanpa @)</label><input type="text" name="instagram" value="<%= settings.instagram %>"></div>
+      <div class="field"><label>Username TikTok (tanpa @)</label><input type="text" name="tiktok" value="<%= settings.tiktok %>"></div>
+      <div class="field"><label>Facebook (opsional, URL lengkap)</label><input type="text" name="facebook" value="<%= settings.facebook %>"></div>
+      <div class="field full"><label>Tautan Google Maps (untuk tombol "Buka di Google Maps")</label><input type="url" name="mapUrl" value="<%= settings.mapUrl %>" placeholder="https://maps.app.goo.gl/..."></div>
+      <div class="field full">
+        <label>URL Embed Peta (untuk peta yang tampil di halaman Kontak)</label>
+        <input type="url" name="mapEmbedUrl" value="<%= settings.mapEmbedUrl %>" placeholder="https://www.google.com/maps?q=...&output=embed">
+        <p class="hint">Cara mendapatkan: buka Google Maps → cari lokasi kantor → klik "Bagikan" → "Sematkan peta" → salin bagian src="..." dari kode tersebut.</p>
+      </div>
+    </div>
+
+    <div class="form-actions"><button type="submit" class="btn btn-primary">Simpan Pengaturan</button></div>
+  </form>
+</div>
+
+<div class="admin-card">
+  <h2>Ganti Password Admin</h2>
+  <form action="/admin/settings/password" method="POST">
+    <div class="form-grid">
+      <div class="field"><label>Password Saat Ini</label><input type="password" name="currentPassword" required></div>
+      <div class="field"></div>
+      <div class="field"><label>Password Baru</label><input type="password" name="newPassword" required minlength="6"></div>
+      <div class="field"><label>Konfirmasi Password Baru</label><input type="password" name="confirmPassword" required minlength="6"></div>
+    </div>
+    <div class="form-actions"><button type="submit" class="btn btn-primary">Ganti Password</button></div>
+  </form>
+</div>
+
+<%- include('partials/foot') %>

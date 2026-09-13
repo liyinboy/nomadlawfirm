@@ -1,0 +1,44 @@
+<%- include('partials/head') %>
+
+<div class="admin-card">
+  <h2>Tambah Mitra Perusahaan</h2>
+  <p style="color:var(--muted); margin-top:-14px; margin-bottom:22px;">Tambahkan perusahaan atau lembaga yang menjadi klien legalitas Anda, misalnya FIFGROUP.</p>
+  <form action="/admin/partners" method="POST" enctype="multipart/form-data">
+    <div class="form-grid">
+      <div class="field"><label for="name">Nama Perusahaan</label><input type="text" id="name" name="name" placeholder="Contoh: PT FIFGROUP" required></div>
+      <div class="field"><label for="url">Tautan Website (opsional)</label><input type="url" id="url" name="url" placeholder="https://"></div>
+      <div class="field full"><label for="description">Deskripsi Singkat</label><input type="text" id="description" name="description" placeholder="Contoh: Legal partner untuk penanganan perkara perdata sejak 2023"></div>
+      <div class="field full"><label for="logo">Logo Perusahaan</label><input type="file" id="logo" name="logo" accept="image/*"></div>
+    </div>
+    <div class="form-actions"><button type="submit" class="btn btn-primary">Simpan Mitra</button></div>
+  </form>
+</div>
+
+<div class="admin-card">
+  <div class="toolbar"><h1>Daftar Mitra (<%= partners.length %>)</h1></div>
+  <div class="table-scroll"><table>
+    <thead><tr><th>Logo</th><th>Nama</th><th>Deskripsi</th><th></th></tr></thead>
+    <tbody>
+      <% if (!partners.length) { %>
+      <tr><td colspan="4" class="empty-row">Belum ada mitra terdaftar.</td></tr>
+      <% } %>
+      <% partners.forEach(p => { %>
+      <tr>
+        <td>
+          <% if (p.logo) { %><img class="table-thumb" src="<%= p.logo %>" alt="<%= p.name %>" style="object-fit:contain;background:#fff;">
+          <% } else { %><div class="table-thumb" style="display:flex;align-items:center;justify-content:center;color:var(--muted-2);font-size:10px;">Kosong</div><% } %>
+        </td>
+        <td><%= p.name %></td>
+        <td><%= p.description || '-' %></td>
+        <td>
+          <form action="/admin/partners/<%= p.id %>?_method=DELETE" method="POST" data-confirm="Hapus mitra '<%= p.name %>'?">
+            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+          </form>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table></div>
+</div>
+
+<%- include('partials/foot') %>

@@ -1,0 +1,95 @@
+{
+  "settings": {
+    "officeName": "NOMAD LAW FIRM",
+    "shortName": "Nomad Law Firm",
+    "tagline": "Kantor Advokat & Konsultan Hukum",
+    "heroTitle": "Kepastian Hukum, Mulai dari Kepercayaan",
+    "heroSubtitle": "Kami mendampingi individu, keluarga, dan pelaku usaha dalam menghadapi persoalan hukum perdata, pidana, keluarga, hingga korporasi, dengan strategi yang terukur, komunikasi yang terbuka, dan komitmen menjaga kepentingan klien di setiap tahap.",
+    "aboutText": "NOMAD LAW FIRM hadir sebagai mitra hukum yang mengedepankan ketelitian, kejujuran, dan hasil nyata bagi setiap klien yang kami dampingi. Tim advokat dan konsultan hukum kami menangani perkara dengan pendekatan yang disesuaikan pada karakter masing-masing kasus, didukung riset yang matang dan komunikasi yang mudah dipahami sejak konsultasi pertama hingga perkara selesai.\n\nBagi kami, praktik hukum bukan sekadar merujuk pada bunyi undang-undang, tetapi tentang bagaimana keadilan benar-benar sampai kepada yang berhak menerimanya. Karena itu, kami selalu mendalami duduk perkara secara menyeluruh sebelum menentukan langkah, dan memperlakukan setiap klien dengan empati serta rasa hormat.",
+    "visionText": "Menjadi kantor hukum pilihan masyarakat yang dikenal karena kejujuran, kecermatan, dan keberpihakannya pada rasa keadilan.",
+    "missionText": "Menyediakan layanan konsultasi dan pendampingan hukum yang jelas, dapat dipertanggungjawabkan, serta selalu mengutamakan kepentingan dan hak klien sesuai kode etik advokat.",
+    "phone": "6282313333277",
+    "phoneDisplay": "0823-1333-3277",
+    "whatsapp": "6282313333277",
+    "email": "info@nomadlawfirm.com",
+    "address": "Jl. Jetis Raya No.21B, Gentan, Kec. Baki, Kabupaten Sukoharjo, Jawa Tengah 57556",
+    "operationalHours": "Senin - Jumat, 08.00 - 17.00 WIB",
+    "instagram": "nomadlawfirm",
+    "tiktok": "",
+    "facebook": "",
+    "mapEmbedUrl": "https://www.google.com/maps?q=-7.5778876,110.781727&z=16&output=embed",
+    "mapUrl": "https://maps.app.goo.gl/yZgyfZKwYtmUUdLB8",
+    "totalCasesHandled": 0,
+    "statsYear": 2026,
+    "ongoingCases": 0,
+    "heroImage": "",
+    "aboutImage": ""
+  },
+  "admin": {
+    "username": "admin",
+    "passwordHash": ""
+  },
+  "team": [],
+  "services": [
+    {
+      "id": "perdata",
+      "title": "Hukum Perdata",
+      "icon": "scale",
+      "desc": "Mendampingi klien dalam sengketa perdata, wanprestasi, dan tuntutan ganti kerugian, baik lewat jalur musyawarah maupun proses persidangan.",
+      "order": 1
+    },
+    {
+      "id": "pidana",
+      "title": "Hukum Pidana",
+      "icon": "gavel",
+      "desc": "Pembelaan hukum sejak tahap pemeriksaan awal oleh penyidik, permohonan praperadilan, sampai pembelaan di muka persidangan.",
+      "order": 2
+    },
+    {
+      "id": "islam",
+      "title": "Hukum Islam",
+      "icon": "book",
+      "desc": "Konsultasi seputar pernikahan, kewarisan, wasiat, hibah, wakaf, serta pengelolaan zakat dan sedekah menurut ketentuan syariah.",
+      "order": 3
+    },
+    {
+      "id": "perceraian",
+      "title": "Perceraian",
+      "icon": "heart",
+      "desc": "Pendampingan proses cerai di Pengadilan Agama maupun Pengadilan Negeri dengan menjaga kerahasiaan dan kepentingan klien sebagai prioritas.",
+      "order": 4
+    },
+    {
+      "id": "gono-gini",
+      "title": "Harta Gono-Gini",
+      "icon": "users",
+      "desc": "Membantu penyelesaian pembagian harta bersama pasangan yang telah bercerai agar tercapai kesepakatan yang wajar bagi kedua pihak.",
+      "order": 5
+    },
+    {
+      "id": "waris",
+      "title": "Waris",
+      "icon": "document",
+      "desc": "Pendampingan pembagian harta warisan sesuai aturan hukum yang berlaku, termasuk mediasi bila terjadi perselisihan antarahli waris.",
+      "order": 6
+    },
+    {
+      "id": "perusahaan",
+      "title": "Hukum Perusahaan",
+      "icon": "building",
+      "desc": "Penyusunan legal opinion dan dokumen hukum, pengurusan legalitas usaha, serta pendampingan kerja sama dan transaksi bisnis.",
+      "order": 7
+    },
+    {
+      "id": "keluarga",
+      "title": "Hukum Keluarga",
+      "icon": "family",
+      "desc": "Menangani berbagai persoalan rumah tangga, mulai dari hak asuh anak, tunjangan nafkah, perwalian, hingga izin dan pencatatan pernikahan.",
+      "order": 8
+    }
+  ],
+  "articles": [],
+  "gallery": [],
+  "partners": [],
+  "messages": []
+}

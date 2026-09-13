@@ -1,0 +1,69 @@
+<%- include('partials/header') %>
+
+<section class="contact-section">
+  <div class="container-wide">
+    <% if (success && success.length) { %><div class="flash flash-success" style="max-width:1160px; margin:0 auto 30px;"><%= success[0] %></div><% } %>
+    <% if (error && error.length) { %><div class="flash flash-error" style="max-width:1160px; margin:0 auto 30px;"><%= error[0] %></div><% } %>
+
+    <div class="contact-grid">
+      <div class="reveal">
+        <div class="eyebrow">Kontak Kami</div>
+        <h1 class="section-title">Hubungi Kami untuk Konsultasi</h1>
+        <p class="section-lead">WhatsApp adalah jalur tercepat untuk terhubung dengan kami, atau gunakan formulir di sebelah untuk mengirim pesan.</p>
+
+        <div class="contact-info-list">
+          <div class="contact-info-item">
+            <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+            <div><h5>Telepon / WhatsApp</h5><a href="https://wa.me/<%= settings.whatsapp %>" target="_blank" rel="noopener"><%= settings.phoneDisplay || settings.phone %></a></div>
+          </div>
+          <div class="contact-info-item">
+            <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16v16H4z"/><path d="M4 6l8 7 8-7"/></svg></div>
+            <div><h5>Email</h5><a href="mailto:<%= settings.email %>"><%= settings.email %></a></div>
+          </div>
+          <div class="contact-info-item">
+            <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <div><h5>Alamat Kantor</h5><p><%= settings.address %></p><% if (settings.mapUrl) { %><a href="<%= settings.mapUrl %>" target="_blank" rel="noopener" class="btn-ghost" style="margin-top:6px; display:inline-flex;">Buka di Google Maps <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></a><% } %></div>
+          </div>
+          <div class="contact-info-item">
+            <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+            <div><h5>Jam Operasional</h5><p><%= settings.operationalHours %></p></div>
+          </div>
+        </div>
+
+        <div class="social-row">
+          <% if (settings.instagram) { %><a href="https://instagram.com/<%= settings.instagram %>" target="_blank" rel="noopener" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.31-1.46.72-2.13 1.38C1.35 2.67.94 3.34.63 4.14.33 4.9.14 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.79.72 1.46 1.38 2.13.66.66 1.34 1.07 2.13 1.38.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56.79-.31 1.46-.72 2.13-1.38.66-.66 1.07-1.34 1.38-2.13.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91-.31-.79-.72-1.46-1.38-2.13C21.33 1.35 20.66.94 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0z"/></svg></a><% } %>
+          <% if (settings.tiktok) { %><a href="https://tiktok.com/@<%= settings.tiktok %>" target="_blank" rel="noopener" aria-label="TikTok"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 5.82c-1-.87-1.68-2.1-1.87-3.5h-3.14v13.3c0 1.6-1.3 2.9-2.9 2.9a2.9 2.9 0 0 1 0-5.8c.29 0 .57.04.83.12V9.58a6.13 6.13 0 0 0-.83-.06 6.09 6.09 0 1 0 6.09 6.09V9.5a9.2 9.2 0 0 0 5.31 1.69V8.05c-1.24 0-2.4-.37-3.49-1.23z"/></svg></a><% } %>
+          <a href="https://wa.me/<%= settings.whatsapp %>" target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.52 0-10 4.48-10 10 0 1.76.46 3.48 1.35 5L2 22l5.15-1.35c1.46.8 3.1 1.22 4.89 1.22 5.52 0 10-4.48 10-10s-4.48-10-10-10zm0 18.15c-1.6 0-3.16-.43-4.52-1.24l-.32-.19-3.05.8.82-2.97-.21-.32A8.13 8.13 0 013.87 12c0-4.5 3.66-8.15 8.17-8.15S20.2 7.5 20.2 12s-3.66 8.15-8.16 8.15z"/></svg></a>
+        </div>
+      </div>
+
+      <div class="reveal reveal-2">
+        <div class="form-card">
+          <h3 style="font-size:20px; margin-bottom:26px;">Kirim Pesan</h3>
+          <form action="/kontak" method="POST">
+            <div class="form-row">
+              <div class="field"><label for="name">Nama Lengkap</label><input type="text" id="name" name="name" required></div>
+              <div class="field"><label for="phone">No. Telepon</label><input type="tel" id="phone" name="phone"></div>
+            </div>
+            <div class="field"><label for="email">Email</label><input type="email" id="email" name="email"></div>
+            <div class="field"><label for="subject">Subjek</label><input type="text" id="subject" name="subject" placeholder="Contoh: Konsultasi Perceraian"></div>
+            <div class="field"><label for="message">Pesan</label><textarea id="message" name="message" required placeholder="Jelaskan permasalahan hukum Anda secara singkat..."></textarea></div>
+            <button type="submit" class="btn btn-primary btn-block">Kirim Pesan</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <% if (settings.mapEmbedUrl) { %>
+    <div class="reveal" style="margin-top:60px;">
+      <div class="eyebrow">Lokasi Kantor</div>
+      <h3 style="font-size:22px; margin-bottom:0;">Temukan Kami di Peta</h3>
+    </div>
+    <div class="map-frame reveal" style="margin-top:22px;">
+      <iframe src="<%= settings.mapEmbedUrl %>" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Lokasi <%= settings.officeName %>"></iframe>
+    </div>
+    <% } %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

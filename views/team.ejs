@@ -1,0 +1,83 @@
+<%- include('partials/header') %>
+
+<section class="page-hero <%= settings.heroImage ? 'has-bg' : '' %>" <% if (settings.heroImage) { %>style="background-image:url('<%= settings.heroImage %>');"<% } %>>
+  <% if (settings.heroImage) { %><div class="hero-overlay"></div><% } %>
+  <div class="container">
+    <div class="breadcrumb"><a href="/">Beranda</a><span class="sep">/</span><span>Tim Kami</span></div>
+    <div class="eyebrow">Tim Kami</div>
+    <h1>Tim Advokat &amp; Konsultan Hukum Kami</h1>
+    <p>Digerakkan oleh Managing Partner bersama jajaran partner dan associate yang berkomitmen pada setiap perkara.</p>
+    <% if (settings.heroImage) { %>
+    <div class="hero-mobile-photo"><img src="<%= settings.heroImage %>" alt="Tim <%= settings.officeName %>"></div>
+    <% } %>
+  </div>
+</section>
+
+<section class="team-section" style="padding-top:90px;">
+  <div class="container-wide">
+
+    <% managingPartner.forEach(m => { %>
+    <div class="team-lead-card reveal">
+      <div class="team-lead-photo">
+        <div class="ph <%= !m.photo ? 'empty' : '' %>">
+          <% if (m.photo) { %><img src="<%= m.photo %>" alt="<%= m.name %>">
+          <% } else { %><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg><% } %>
+        </div>
+      </div>
+      <div class="team-lead-info">
+        <span class="role-tag">Managing Partner</span>
+        <h3><%= m.name %></h3>
+        <span class="title"><%= m.title %></span>
+        <p><%= m.bio %></p>
+      </div>
+    </div>
+    <% }) %>
+
+    <% if (partners.length) { %>
+    <div class="team-subhead reveal"><h4>Partner</h4><span class="rule"></span></div>
+    <div class="team-grid reveal reveal-2">
+      <% partners.forEach(m => { %>
+      <div class="team-card">
+        <div class="ph <%= !m.photo ? 'empty' : '' %>">
+          <% if (m.photo) { %><img src="<%= m.photo %>" alt="<%= m.name %>">
+          <% } else { %><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg><% } %>
+        </div>
+        <h4><%= m.name %></h4>
+        <span class="title"><%= m.title %></span>
+        <% if (m.bio) { %><p style="color:var(--muted); font-size:13.5px; margin-top:8px;"><%= m.bio %></p><% } %>
+      </div>
+      <% }) %>
+    </div>
+    <% } %>
+
+    <% if (associates.length) { %>
+    <div class="team-subhead reveal"><h4>Associate</h4><span class="rule"></span></div>
+    <div class="team-grid reveal reveal-2">
+      <% associates.forEach(m => { %>
+      <div class="team-card">
+        <div class="ph <%= !m.photo ? 'empty' : '' %>">
+          <% if (m.photo) { %><img src="<%= m.photo %>" alt="<%= m.name %>">
+          <% } else { %><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg><% } %>
+        </div>
+        <h4><%= m.name %></h4>
+        <span class="title"><%= m.title %></span>
+      </div>
+      <% }) %>
+    </div>
+    <% } %>
+
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="container">
+    <div class="eyebrow center" style="color:#fff;">Bergabung Bersama Kami</div>
+    <h2>Serahkan Perkara Anda pada yang Ahli</h2>
+    <p>Kami mendampingi Anda dengan pendekatan hukum yang profesional sekaligus personal.</p>
+    <div class="hero-actions" style="justify-content:center;">
+      <a href="/kontak" class="btn btn-primary">Konsultasi Sekarang</a>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

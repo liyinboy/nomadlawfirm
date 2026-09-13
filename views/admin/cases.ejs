@@ -1,0 +1,48 @@
+<%- include('partials/head') %>
+
+<div class="admin-card">
+  <div class="toolbar"><h1>Pengajuan Kasus (<%= cases.length %>)</h1></div>
+  <div class="table-scroll"><table>
+    <thead><tr><th>Klien</th><th>Kategori</th><th>Uraian</th><th>Status</th><th>Tanggal</th><th></th></tr></thead>
+    <tbody>
+      <% if (!cases.length) { %>
+      <tr><td colspan="6" class="empty-row">Belum ada kasus yang diajukan klien.</td></tr>
+      <% } %>
+      <% cases.forEach(c => { %>
+      <tr>
+        <td>
+          <strong><%= c.name %></strong>
+          <div style="color:var(--muted-2); font-size:12px;"><%= c.phone %><% if (c.email) { %> &middot; <%= c.email %><% } %></div>
+        </td>
+        <td><%= c.category || '-' %></td>
+        <td style="max-width:280px;"><%= c.description %></td>
+        <td>
+          <span class="status-pill <%= c.status === 'selesai' ? 'status-published' : (c.status === 'diproses' ? 'status-draft' : '') %>" <% if (c.status === 'baru') { %>style="background:rgba(224,39,42,.12); color:#ff9a9c;"<% } %>>
+            <%= c.status === 'baru' ? 'Baru' : (c.status === 'diproses' ? 'Diproses' : 'Selesai') %>
+          </span>
+        </td>
+        <td><%= new Date(c.createdAt).toLocaleDateString('id-ID', {day:'numeric', month:'short', year:'numeric'}) %></td>
+        <td>
+          <div class="row-actions">
+            <% if (c.phone) { %><a href="https://wa.me/<%= c.phone.replace(/[^0-9]/g,'') %>" target="_blank" class="btn btn-outline btn-sm">WA</a><% } %>
+            <form action="/admin/kasus/<%= c.id %>?_method=DELETE" method="POST" data-confirm="Hapus pengajuan kasus dari <%= c.name %>?">
+              <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+            </form>
+          </div>
+          <form action="/admin/kasus/<%= c.id %>/status" method="POST" class="case-status-form">
+            <select name="status">
+              <option value="baru" <%= c.status === 'baru' ? 'selected' : '' %>>Baru</option>
+              <option value="diproses" <%= c.status === 'diproses' ? 'selected' : '' %>>Diproses</option>
+              <option value="selesai" <%= c.status === 'selesai' ? 'selected' : '' %>>Selesai</option>
+            </select>
+            <input type="text" name="adminNote" placeholder="Catatan internal (opsional)" value="<%= c.adminNote || '' %>">
+            <button type="submit" class="btn btn-outline btn-sm">Simpan</button>
+          </form>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table></div>
+</div>
+
+<%- include('partials/foot') %>

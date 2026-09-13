@@ -1,0 +1,85 @@
+<%- include('partials/head') %>
+
+<div class="admin-card">
+  <h2>Tambah Layanan Hukum Baru</h2>
+  <form action="/admin/services" method="POST">
+    <div class="form-grid">
+      <div class="field"><label for="title">Nama Layanan</label><input type="text" id="title" name="title" placeholder="Contoh: Hukum Ketenagakerjaan" required></div>
+      <div class="field">
+        <label for="icon">Ikon</label>
+        <select id="icon" name="icon">
+          <option value="scale">Timbangan (Perdata)</option>
+          <option value="gavel">Palu Hakim (Pidana)</option>
+          <option value="book">Buku (Hukum Islam)</option>
+          <option value="heart">Hati (Perceraian)</option>
+          <option value="users">Dua Orang (Gono-Gini/Keluarga)</option>
+          <option value="document">Dokumen (Waris/Surat)</option>
+          <option value="building">Gedung (Perusahaan)</option>
+          <option value="chat">Percakapan (Konsultasi)</option>
+          <option value="family">Keluarga</option>
+        </select>
+      </div>
+      <div class="field"><label for="order">Urutan Tampil</label><input type="number" id="order" name="order" value="<%= services.length + 1 %>" min="1"></div>
+      <div class="field full"><label for="desc">Deskripsi Layanan</label><textarea id="desc" name="desc" placeholder="Jelaskan cakupan layanan ini secara singkat..." required></textarea></div>
+    </div>
+    <div class="form-actions"><button type="submit" class="btn btn-primary">Simpan Layanan</button></div>
+  </form>
+</div>
+
+<div class="admin-card">
+  <div class="toolbar"><h1>Daftar Layanan Hukum (<%= services.length %>)</h1></div>
+  <div class="table-scroll"><table>
+    <thead><tr><th>Urutan</th><th>Nama Layanan</th><th>Deskripsi</th><th></th></tr></thead>
+    <tbody>
+      <% if (!services.length) { %>
+      <tr><td colspan="4" class="empty-row">Belum ada layanan. Tambahkan lewat form di atas.</td></tr>
+      <% } %>
+      <% services.forEach(s => { %>
+      <tr>
+        <td><%= s.order %></td>
+        <td><%= s.title %></td>
+        <td style="max-width:360px;"><%= s.desc %></td>
+        <td>
+          <div class="row-actions">
+            <a href="#" class="btn btn-outline btn-sm" onclick="document.getElementById('edit-<%= s.id %>').style.display='block';return false;">Edit</a>
+            <form action="/admin/services/<%= s.id %>?_method=DELETE" method="POST" data-confirm="Hapus layanan '<%= s.title %>'?">
+              <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      <tr id="edit-<%= s.id %>" style="display:none;">
+        <td colspan="4">
+          <form action="/admin/services/<%= s.id %>?_method=PUT" method="POST" style="padding:16px; background:var(--ink-3); border-radius:6px;">
+            <div class="form-grid">
+              <div class="field"><label>Nama Layanan</label><input type="text" name="title" value="<%= s.title %>" required></div>
+              <div class="field">
+                <label>Ikon</label>
+                <select name="icon">
+                  <option value="scale" <%= s.icon === 'scale' ? 'selected' : '' %>>Timbangan (Perdata)</option>
+                  <option value="gavel" <%= s.icon === 'gavel' ? 'selected' : '' %>>Palu Hakim (Pidana)</option>
+                  <option value="book" <%= s.icon === 'book' ? 'selected' : '' %>>Buku (Hukum Islam)</option>
+                  <option value="heart" <%= s.icon === 'heart' ? 'selected' : '' %>>Hati (Perceraian)</option>
+                  <option value="users" <%= s.icon === 'users' ? 'selected' : '' %>>Dua Orang (Gono-Gini/Keluarga)</option>
+                  <option value="document" <%= s.icon === 'document' ? 'selected' : '' %>>Dokumen (Waris/Surat)</option>
+                  <option value="building" <%= s.icon === 'building' ? 'selected' : '' %>>Gedung (Perusahaan)</option>
+                  <option value="chat" <%= s.icon === 'chat' ? 'selected' : '' %>>Percakapan (Konsultasi)</option>
+                  <option value="family" <%= s.icon === 'family' ? 'selected' : '' %>>Keluarga</option>
+                </select>
+              </div>
+              <div class="field"><label>Urutan Tampil</label><input type="number" name="order" value="<%= s.order %>" min="1"></div>
+              <div class="field full"><label>Deskripsi Layanan</label><textarea name="desc" required><%= s.desc %></textarea></div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary btn-sm">Simpan Perubahan</button>
+              <a href="#" class="btn btn-outline btn-sm" onclick="document.getElementById('edit-<%= s.id %>').style.display='none';return false;">Batal</a>
+            </div>
+          </form>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table></div>
+</div>
+
+<%- include('partials/foot') %>

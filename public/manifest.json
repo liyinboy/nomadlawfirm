@@ -1,0 +1,33 @@
+{
+  "name": "Nomad Law Firm - Advokat & Konsultan Hukum",
+  "short_name": "Nomad Law Firm",
+  "description": "Kantor advokat & konsultan hukum: perdata, pidana, keluarga, waris, dan korporasi.",
+  "start_url": "/?source=pwa",
+  "id": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0a1830",
+  "theme_color": "#0a1830",
+  "lang": "id",
+  "dir": "ltr",
+  "categories": ["business", "lifestyle"],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Hubungi via WhatsApp",
+      "url": "/kontak",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Layanan Hukum",
+      "url": "/layanan",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

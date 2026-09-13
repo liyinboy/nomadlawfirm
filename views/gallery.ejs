@@ -1,0 +1,48 @@
+<%- include('partials/header') %>
+
+<section class="page-hero <%= settings.heroImage ? 'has-bg' : '' %>" <% if (settings.heroImage) { %>style="background-image:url('<%= settings.heroImage %>');"<% } %>>
+  <% if (settings.heroImage) { %><div class="hero-overlay"></div><% } %>
+  <div class="container">
+    <div class="breadcrumb"><a href="/">Beranda</a><span class="sep">/</span><span>Galeri</span></div>
+    <div class="eyebrow">Dokumentasi</div>
+    <h1>Galeri Aktivitas Kantor</h1>
+    <p>Kumpulan dokumentasi sidang, kegiatan kantor, dan momen bersama klien maupun mitra.</p>
+    <% if (settings.heroImage) { %>
+    <div class="hero-mobile-photo"><img src="<%= settings.heroImage %>" alt="Tim <%= settings.officeName %>"></div>
+    <% } %>
+  </div>
+</section>
+
+<section class="gallery-section" style="padding-top:90px;">
+  <div class="container-wide">
+    <% if (gallery.length) { %>
+    <div class="gallery-grid reveal">
+      <% gallery.forEach(g => { %>
+      <div class="gallery-item <%= g.type === 'video' ? 'is-video' : '' %>" data-type="<%= g.type || 'photo' %>" data-video-source="<%= g.videoSource || '' %>" data-full="<%= g.image %>" data-video-id="<%= g.videoId || '' %>" data-video-url="<%= g.videoUrl || '' %>" data-caption="<%= g.caption %>">
+        <% if (g.type === 'video' && g.videoSource === 'upload') { %>
+        <video src="<%= g.videoUrl %>" muted preload="metadata"></video>
+        <% } else { %>
+        <img src="<%= g.image %>" alt="<%= g.caption %>">
+        <% } %>
+        <% if (g.type === 'video') { %><div class="play-badge"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><% } %>
+        <div class="cap"><%= g.caption %></div>
+      </div>
+      <% }) %>
+    </div>
+    <% } else { %>
+    <div class="empty-state reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M3 15l5-5 4 4 5-5 4 4"/></svg>
+      <p>Galeri kegiatan belum tersedia.</p>
+    </div>
+    <% } %>
+  </div>
+</section>
+<div class="lightbox">
+  <button class="lb-close" aria-label="Tutup">&times;</button>
+  <img src="" alt="">
+  <div class="lb-video-wrap"><iframe src="" title="Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+  <video class="lb-video-native" controls playsinline></video>
+  <div class="lb-cap"></div>
+</div>
+
+<%- include('partials/footer') %>

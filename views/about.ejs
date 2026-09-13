@@ -1,0 +1,66 @@
+<%- include('partials/header') %>
+
+<section class="page-hero <%= settings.heroImage ? 'has-bg' : '' %>" <% if (settings.heroImage) { %>style="background-image:url('<%= settings.heroImage %>');"<% } %>>
+  <% if (settings.heroImage) { %><div class="hero-overlay"></div><% } %>
+  <div class="container">
+    <div class="breadcrumb"><a href="/">Beranda</a><span class="sep">/</span><span>Tentang Kami</span></div>
+    <div class="eyebrow">Tentang Kami</div>
+    <h1>Kantor Hukum yang Mengutamakan Kepercayaan Klien</h1>
+    <p><%= settings.officeName %> berdiri untuk membantu perorangan maupun badan usaha menyelesaikan persoalan hukum melalui langkah yang tepat sasaran dan penuh tanggung jawab.</p>
+    <% if (settings.heroImage) { %>
+    <div class="hero-mobile-photo"><img src="<%= settings.heroImage %>" alt="Tim <%= settings.officeName %>"></div>
+    <% } %>
+  </div>
+</section>
+
+<section class="about-split" style="padding-top:90px;">
+  <div class="container-wide">
+    <div class="about-grid">
+      <div class="about-media reveal">
+        <div class="frame">
+          <img src="<%= settings.aboutImage || '/images/logo.png' %>" alt="<%= settings.officeName %>">
+        </div>
+        <div class="badge"><strong><%= settings.totalCasesHandled %>+</strong><span>Perkara Ditangani</span></div>
+      </div>
+      <div class="about-copy reveal reveal-2">
+        <div class="eyebrow">Profil Firma</div>
+        <h2 class="section-title">Siapa Kami</h2>
+        <p><%= settings.aboutText %></p>
+      </div>
+    </div>
+
+    <div class="vision-mission reveal">
+      <div class="vm-card">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <h3>Visi</h3>
+        <p><%= settings.visionText %></p>
+      </div>
+      <div class="vm-card">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4L12 2z"/></svg></div>
+        <h3>Misi</h3>
+        <p><%= settings.missionText %></p>
+      </div>
+    </div>
+
+    <div class="timeline-values reveal">
+      <div class="tv-item"><span>01</span><h4>Integritas</h4><p>Berpegang pada kejujuran dan kode etik advokat di setiap proses penanganan perkara.</p></div>
+      <div class="tv-item"><span>02</span><h4>Profesionalisme</h4><p>Mengerjakan setiap kasus dengan riset mendalam dan standar praktik hukum yang ketat.</p></div>
+      <div class="tv-item"><span>03</span><h4>Kerahasiaan</h4><p>Merahasiakan penuh setiap informasi yang dipercayakan klien kepada kami.</p></div>
+      <div class="tv-item"><span>04</span><h4>Berorientasi Hasil</h4><p>Mengupayakan hasil terbaik yang benar-benar melindungi hak klien.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="container">
+    <div class="eyebrow center" style="color:#fff;">Mari Berdiskusi</div>
+    <h2>Serahkan Persoalan Hukum Anda pada Kami</h2>
+    <p>Kami siap memberi konsultasi awal untuk memahami duduk perkara yang Anda alami.</p>
+    <div class="hero-actions" style="justify-content:center;">
+      <a href="/kontak" class="btn btn-primary">Konsultasi Sekarang</a>
+      <a href="/tim-kami" class="btn btn-outline">Kenali Tim Kami</a>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

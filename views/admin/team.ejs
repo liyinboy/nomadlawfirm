@@ -1,0 +1,93 @@
+<%- include('partials/head') %>
+
+<div class="admin-card">
+  <h2>Tambah Anggota Tim Baru</h2>
+  <form action="/admin/team" method="POST" enctype="multipart/form-data">
+    <div class="form-grid">
+      <div class="field"><label for="name">Nama Lengkap &amp; Gelar</label><input type="text" id="name" name="name" placeholder="Contoh: Budi Santoso, S.H." required></div>
+      <div class="field"><label for="title">Jabatan</label><input type="text" id="title" name="title" placeholder="Contoh: Partner" required></div>
+      <div class="field">
+        <label for="role">Kategori</label>
+        <select id="role" name="role">
+          <option value="managing-partner">Managing Partner</option>
+          <option value="partner" selected>Partner</option>
+          <option value="associate">Associate</option>
+        </select>
+      </div>
+      <div class="field"><label for="order">Urutan Tampil</label><input type="number" id="order" name="order" value="1" min="1"></div>
+      <div class="field full">
+        <label for="bio">Bio Singkat</label>
+        <textarea id="bio" name="bio" placeholder="Deskripsi singkat keahlian atau fokus penanganan perkara..."></textarea>
+      </div>
+      <div class="field full">
+        <label for="photo">Foto Profil</label>
+        <input type="file" id="photo" name="photo" accept="image/*">
+        <p class="hint">Kosongkan jika foto belum tersedia, dapat diunggah menyusul kapan saja dengan tombol Edit.</p>
+      </div>
+    </div>
+    <div class="form-actions"><button type="submit" class="btn btn-primary">Simpan Anggota Tim</button></div>
+  </form>
+</div>
+
+<div class="admin-card">
+  <div class="toolbar"><h1>Daftar Tim (<%= team.length %>)</h1></div>
+  <div class="table-scroll"><table>
+    <thead><tr><th>Foto</th><th>Nama</th><th>Jabatan</th><th>Kategori</th><th>Urutan</th><th></th></tr></thead>
+    <tbody>
+      <% if (!team.length) { %>
+      <tr><td colspan="6" class="empty-row">Belum ada data tim.</td></tr>
+      <% } %>
+      <% team.forEach(m => { %>
+      <tr>
+        <td>
+          <% if (m.photo) { %><img class="table-thumb" src="<%= m.photo %>" alt="<%= m.name %>">
+          <% } else { %><div class="table-thumb" style="display:flex;align-items:center;justify-content:center;color:var(--muted-2);font-size:10px;">Kosong</div><% } %>
+        </td>
+        <td><%= m.name %></td>
+        <td><%= m.title %></td>
+        <td><%= m.role === 'managing-partner' ? 'Managing Partner' : m.role === 'partner' ? 'Partner' : 'Associate' %></td>
+        <td><%= m.order %></td>
+        <td>
+          <div class="row-actions">
+            <a href="#" class="btn btn-outline btn-sm" onclick="document.getElementById('edit-<%= m.id %>').style.display='block';return false;">Edit</a>
+            <form action="/admin/team/<%= m.id %>?_method=DELETE" method="POST" data-confirm="Hapus <%= m.name %> dari daftar tim?">
+              <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      <tr id="edit-<%= m.id %>" style="display:none;">
+        <td colspan="6">
+          <form action="/admin/team/<%= m.id %>?_method=PUT" method="POST" enctype="multipart/form-data" style="padding:16px; background:var(--ink-3); border-radius:6px;">
+            <div class="form-grid">
+              <div class="field"><label>Nama Lengkap &amp; Gelar</label><input type="text" name="name" value="<%= m.name %>" required></div>
+              <div class="field"><label>Jabatan</label><input type="text" name="title" value="<%= m.title %>" required></div>
+              <div class="field">
+                <label>Kategori</label>
+                <select name="role">
+                  <option value="managing-partner" <%= m.role === 'managing-partner' ? 'selected' : '' %>>Managing Partner</option>
+                  <option value="partner" <%= m.role === 'partner' ? 'selected' : '' %>>Partner</option>
+                  <option value="associate" <%= m.role === 'associate' ? 'selected' : '' %>>Associate</option>
+                </select>
+              </div>
+              <div class="field"><label>Urutan Tampil</label><input type="number" name="order" value="<%= m.order %>" min="1"></div>
+              <div class="field full"><label>Bio Singkat</label><textarea name="bio"><%= m.bio %></textarea></div>
+              <div class="field full">
+                <label>Ganti Foto</label>
+                <% if (m.photo) { %><div class="current-photo"><img src="<%= m.photo %>" alt=""><span class="hint">Foto saat ini. Unggah file baru untuk menggantinya.</span></div><% } %>
+                <input type="file" name="photo" accept="image/*">
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary btn-sm">Simpan Perubahan</button>
+              <a href="#" class="btn btn-outline btn-sm" onclick="document.getElementById('edit-<%= m.id %>').style.display='none';return false;">Batal</a>
+            </div>
+          </form>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table></div>
+</div>
+
+<%- include('partials/foot') %>
