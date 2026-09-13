@@ -1,0 +1,70 @@
+<%- include('partials/header') %>
+
+<section class="app-page">
+  <div class="container-wide app-page-inner">
+
+    <div class="app-page-head reveal">
+      <div class="eyebrow">Akun Klien</div>
+      <h1 class="section-title">Halo, <%= currentUser.name %></h1>
+      <p class="section-lead">Berikut riwayat konsultasi dan pengajuan kasus yang tersimpan di akun Anda.</p>
+    </div>
+
+    <% if (success && success.length) { %><div class="flash flash-success"><%= success[0] %></div><% } %>
+    <% if (error && error.length) { %><div class="flash flash-error"><%= error[0] %></div><% } %>
+
+    <div class="account-block reveal reveal-2">
+      <div class="account-block-head">
+        <h3>Konsultasi Chat</h3>
+        <a href="/konsultasi" class="btn-ghost">Buka Ruang Konsultasi <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+      <% if (!threads.length) { %>
+      <p class="account-empty">Anda belum pernah memulai konsultasi.</p>
+      <% } else { %>
+      <div class="account-list">
+        <% threads.forEach(t => { %>
+        <a href="/konsultasi" class="account-item">
+          <div>
+            <strong><%= t.topic || 'Konsultasi Umum' %></strong>
+            <span class="account-item-date"><%= new Date(t.createdAt).toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' }) %></span>
+          </div>
+          <span class="chat-status-pill <%= t.status === 'open' ? 'is-open' : 'is-closed' %>"><%= t.status === 'open' ? 'Sedang Berlangsung' : 'Selesai' %></span>
+        </a>
+        <% }) %>
+      </div>
+      <% } %>
+    </div>
+
+    <div class="account-block reveal reveal-3">
+      <div class="account-block-head">
+        <h3>Pengajuan Kasus</h3>
+        <a href="/ajukan-kasus" class="btn-ghost">Ajukan Kasus Baru <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+      <% if (!cases.length) { %>
+      <p class="account-empty">Anda belum pernah mengajukan kasus.</p>
+      <% } else { %>
+      <div class="account-list">
+        <% cases.forEach(c => { %>
+        <div class="account-item">
+          <div>
+            <strong><%= c.category || 'Kasus Umum' %></strong>
+            <span class="account-item-date"><%= new Date(c.createdAt).toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' }) %></span>
+            <p class="account-item-desc"><%= c.description.length > 120 ? c.description.slice(0,120) + '...' : c.description %></p>
+            <% if (c.adminNote) { %><p class="account-item-note"><strong>Catatan tim:</strong> <%= c.adminNote %></p><% } %>
+          </div>
+          <span class="chat-status-pill <%= c.status === 'selesai' ? 'is-closed' : (c.status === 'diproses' ? 'is-progress' : 'is-open') %>">
+            <%= c.status === 'baru' ? 'Baru Diterima' : (c.status === 'diproses' ? 'Sedang Diproses' : 'Selesai') %>
+          </span>
+        </div>
+        <% }) %>
+      </div>
+      <% } %>
+    </div>
+
+    <form action="/keluar" method="POST" style="margin-top:8px;">
+      <button type="submit" class="btn-ghost">Keluar dari Akun</button>
+    </form>
+
+  </div>
+</section>
+
+<%- include('partials/footer') %>

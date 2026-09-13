@@ -17,7 +17,7 @@
         <td><%= c.category || '-' %></td>
         <td style="max-width:280px;"><%= c.description %></td>
         <td>
-          <span class="status-pill <%= c.status === 'selesai' ? 'status-published' : (c.status === 'diproses' ? 'status-draft' : '') %>" <% if (c.status === 'baru') { %>style="background:rgba(224,39,42,.12); color:#ff9a9c;"<% } %>>
+          <span class="status-pill <%= c.status === 'selesai' ? 'status-published' : (c.status === 'diproses' ? 'status-draft' : 'status-new') %>">
             <%= c.status === 'baru' ? 'Baru' : (c.status === 'diproses' ? 'Diproses' : 'Selesai') %>
           </span>
         </td>

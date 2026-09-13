@@ -1,0 +1,29 @@
+<%- include('partials/header') %>
+
+<section class="app-page">
+  <div class="container-wide app-page-inner">
+
+    <div class="app-page-head reveal">
+      <div class="eyebrow">Akun Klien</div>
+      <h1 class="section-title">Buat Akun Baru</h1>
+      <p class="section-lead">Dengan akun, riwayat konsultasi dan status pengajuan kasus Anda tersimpan dan bisa dicek kapan saja, dari perangkat mana saja.</p>
+    </div>
+
+    <% if (success && success.length) { %><div class="flash flash-success"><%= success[0] %></div><% } %>
+    <% if (error && error.length) { %><div class="flash flash-error"><%= error[0] %></div><% } %>
+
+    <div class="form-card auth-card reveal reveal-2">
+      <form action="/daftar" method="POST">
+        <input type="hidden" name="redirectTo" value="<%= redirectTo %>">
+        <div class="field"><label for="name">Nama Lengkap</label><input type="text" id="name" name="name" required autofocus></div>
+        <div class="field"><label for="identifier">Email atau No. WhatsApp</label><input type="text" id="identifier" name="identifier" required placeholder="nama@email.com atau 08xxxxxxxxxx"></div>
+        <div class="field"><label for="password">Kata Sandi</label><input type="password" id="password" name="password" required minlength="6" placeholder="Minimal 6 karakter"></div>
+        <button type="submit" class="btn btn-primary btn-block">Daftar Akun</button>
+      </form>
+      <p class="auth-switch">Sudah punya akun? <a href="/masuk<%= redirectTo ? ('?redirect=' + encodeURIComponent(redirectTo)) : '' %>">Masuk di sini</a></p>
+    </div>
+
+  </div>
+</section>
+
+<%- include('partials/footer') %>

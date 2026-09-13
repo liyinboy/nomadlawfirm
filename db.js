@@ -62,7 +62,10 @@ async function createSchema() {
       instagram VARCHAR(255), tiktok VARCHAR(255), facebook VARCHAR(255),
       mapEmbedUrl VARCHAR(1000), mapUrl VARCHAR(1000),
       totalCasesHandled INT DEFAULT 0, statsYear INT, ongoingCases INT DEFAULT 0,
-      heroImage VARCHAR(500), aboutImage VARCHAR(500)
+      heroImage VARCHAR(500), aboutImage VARCHAR(500),
+      heroSlide1Image VARCHAR(500), heroSlide1Caption VARCHAR(500),
+      heroSlide2Image VARCHAR(500), heroSlide2Caption VARCHAR(500),
+      heroSlide3Image VARCHAR(500), heroSlide3Caption VARCHAR(500)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
   `);
   await query(`
@@ -138,6 +141,16 @@ async function createSchema() {
       createdAt DATETIME
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
   `);
+  await query(`
+    CREATE TABLE IF NOT EXISTS users (
+      id VARCHAR(64) PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      email VARCHAR(255) NULL UNIQUE,
+      phone VARCHAR(50) NULL UNIQUE,
+      passwordHash VARCHAR(255) NOT NULL,
+      createdAt DATETIME
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+  `);
 
   // Auto-repair tables that existed before newer columns were added to the schema.
   await ensureColumns('gallery', {
@@ -146,8 +159,13 @@ async function createSchema() {
     itemDate: 'DATETIME'
   });
   await ensureColumns('settings', {
-    heroImage: 'VARCHAR(500)', aboutImage: 'VARCHAR(500)', mapEmbedUrl: 'VARCHAR(1000)', mapUrl: 'VARCHAR(1000)'
+    heroImage: 'VARCHAR(500)', aboutImage: 'VARCHAR(500)', mapEmbedUrl: 'VARCHAR(1000)', mapUrl: 'VARCHAR(1000)',
+    heroSlide1Image: 'VARCHAR(500)', heroSlide1Caption: 'VARCHAR(500)',
+    heroSlide2Image: 'VARCHAR(500)', heroSlide2Caption: 'VARCHAR(500)',
+    heroSlide3Image: 'VARCHAR(500)', heroSlide3Caption: 'VARCHAR(500)'
   });
+  await ensureColumns('consult_threads', { userId: 'VARCHAR(64)' });
+  await ensureColumns('case_submissions', { userId: 'VARCHAR(64)' });
 }
 
 // ---------------------------------------------------------------------
@@ -163,13 +181,17 @@ async function seedIfEmpty() {
       `INSERT INTO settings (id, officeName, shortName, tagline, heroTitle, heroSubtitle,
         aboutText, visionText, missionText, phone, phoneDisplay, whatsapp, email, address,
         operationalHours, instagram, tiktok, facebook, mapEmbedUrl, mapUrl,
-        totalCasesHandled, statsYear, ongoingCases, heroImage, aboutImage)
-       VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        totalCasesHandled, statsYear, ongoingCases, heroImage, aboutImage,
+        heroSlide1Image, heroSlide1Caption, heroSlide2Image, heroSlide2Caption,
+        heroSlide3Image, heroSlide3Caption)
+       VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [s.officeName, s.shortName, s.tagline, s.heroTitle, s.heroSubtitle, s.aboutText,
        s.visionText, s.missionText, s.phone, s.phoneDisplay, s.whatsapp, s.email, s.address,
        s.operationalHours, s.instagram, s.tiktok, s.facebook, s.mapEmbedUrl || '', s.mapUrl || '',
        s.totalCasesHandled || 0, s.statsYear || new Date().getFullYear(), s.ongoingCases || 0,
-       s.heroImage || '', s.aboutImage || '']
+       s.heroImage || '', s.aboutImage || '',
+       s.heroSlide1Image || '', s.heroSlide1Caption || '', s.heroSlide2Image || '', s.heroSlide2Caption || '',
+       s.heroSlide3Image || '', s.heroSlide3Caption || '']
     );
 
     const defaultPassword = process.env.ADMIN_DEFAULT_PASSWORD || 'nomad@admin123';
@@ -572,16 +594,33 @@ const Messages = {
 const Consultations = {
   async findByToken(token) {
     const rows = await query(
-      `SELECT id, clientToken, name, phone, email, topic, status,
+      `SELECT id, clientToken, userId, name, phone, email, topic, status,
         createdAt, lastMessageAt, adminUnread, clientUnread
        FROM consult_threads WHERE clientToken = ? ORDER BY createdAt DESC LIMIT 1`,
       [token]
     );
     return rows[0];
   },
+  async findByUserId(userId) {
+    const rows = await query(
+      `SELECT id, clientToken, userId, name, phone, email, topic, status,
+        createdAt, lastMessageAt, adminUnread, clientUnread
+       FROM consult_threads WHERE userId = ? ORDER BY createdAt DESC LIMIT 1`,
+      [userId]
+    );
+    return rows[0];
+  },
+  async allByUser(userId) {
+    return query(
+      `SELECT id, clientToken, userId, name, phone, email, topic, status,
+        createdAt, lastMessageAt, adminUnread, clientUnread
+       FROM consult_threads WHERE userId = ? ORDER BY createdAt DESC`,
+      [userId]
+    );
+  },
   async find(id) {
     const rows = await query(
-      `SELECT id, clientToken, name, phone, email, topic, status,
+      `SELECT id, clientToken, userId, name, phone, email, topic, status,
         createdAt, lastMessageAt, adminUnread, clientUnread
        FROM consult_threads WHERE id = ?`,
       [id]
@@ -590,7 +629,7 @@ const Consultations = {
   },
   async all() {
     return query(
-      `SELECT id, clientToken, name, phone, email, topic, status,
+      `SELECT id, clientToken, userId, name, phone, email, topic, status,
         createdAt, lastMessageAt, adminUnread, clientUnread
        FROM consult_threads ORDER BY lastMessageAt DESC`
     );
@@ -599,13 +638,13 @@ const Consultations = {
     const [{ c }] = await query("SELECT COUNT(*) AS c FROM consult_threads WHERE adminUnread = 1");
     return c;
   },
-  async create({ clientToken, name, phone, email, topic, firstMessage }) {
+  async create({ clientToken, userId, name, phone, email, topic, firstMessage }) {
     const id = newId('thr');
     const now = new Date();
     await query(
-      `INSERT INTO consult_threads (id, clientToken, name, phone, email, topic, status, createdAt, lastMessageAt, adminUnread, clientUnread)
-       VALUES (?, ?, ?, ?, ?, ?, 'open', ?, ?, 1, 0)`,
-      [id, clientToken, name, phone || '', email || '', topic || '', now, now]
+      `INSERT INTO consult_threads (id, clientToken, userId, name, phone, email, topic, status, createdAt, lastMessageAt, adminUnread, clientUnread)
+       VALUES (?, ?, ?, ?, ?, ?, ?, 'open', ?, ?, 1, 0)`,
+      [id, clientToken || null, userId || null, name, phone || '', email || '', topic || '', now, now]
     );
     if (firstMessage) {
       await query('INSERT INTO consult_messages (id, threadId, sender, body, sentAt) VALUES (?, ?, "client", ?, ?)',
@@ -650,28 +689,35 @@ const Consultations = {
 const Cases = {
   async all() {
     return query(
-      `SELECT id, name, phone, email, category, description, status, adminNote, createdAt
+      `SELECT id, userId, name, phone, email, category, description, status, adminNote, createdAt
        FROM case_submissions ORDER BY createdAt DESC`
     );
   },
   async find(id) {
     const rows = await query(
-      `SELECT id, name, phone, email, category, description, status, adminNote, createdAt
+      `SELECT id, userId, name, phone, email, category, description, status, adminNote, createdAt
        FROM case_submissions WHERE id = ?`,
       [id]
     );
     return rows[0];
   },
+  async allByUser(userId) {
+    return query(
+      `SELECT id, userId, name, phone, email, category, description, status, adminNote, createdAt
+       FROM case_submissions WHERE userId = ? ORDER BY createdAt DESC`,
+      [userId]
+    );
+  },
   async countNew() {
     const [{ c }] = await query("SELECT COUNT(*) AS c FROM case_submissions WHERE status = 'baru'");
     return c;
   },
-  async create({ name, phone, email, category, description }) {
+  async create({ userId, name, phone, email, category, description }) {
     const id = newId('case');
     await query(
-      `INSERT INTO case_submissions (id, name, phone, email, category, description, status, createdAt)
-       VALUES (?, ?, ?, ?, ?, ?, 'baru', ?)`,
-      [id, name, phone || '', email || '', category || '', description, new Date()]
+      `INSERT INTO case_submissions (id, userId, name, phone, email, category, description, status, createdAt)
+       VALUES (?, ?, ?, ?, ?, ?, ?, 'baru', ?)`,
+      [id, userId || null, name, phone || '', email || '', category || '', description, new Date()]
     );
     return id;
   },
@@ -683,4 +729,33 @@ const Cases = {
   }
 };
 
-module.exports = { init, Settings, Admin, Team, Services, Articles, Gallery, Partners, Messages, Consultations, Cases };
+// ---------------------------------------------------------------------
+// Client user accounts (Daftar / Masuk)
+// ---------------------------------------------------------------------
+const Users = {
+  async findByIdentifier(identifier) {
+    const rows = await query(
+      'SELECT id, name, email, phone, passwordHash, createdAt FROM users WHERE email = ? OR phone = ? LIMIT 1',
+      [identifier, identifier]
+    );
+    return rows[0];
+  },
+  async findById(id) {
+    const rows = await query('SELECT id, name, email, phone, createdAt FROM users WHERE id = ?', [id]);
+    return rows[0];
+  },
+  async create({ name, email, phone, password }) {
+    const id = newId('usr');
+    const passwordHash = bcrypt.hashSync(password, 10);
+    await query(
+      'INSERT INTO users (id, name, email, phone, passwordHash, createdAt) VALUES (?, ?, ?, ?, ?, ?)',
+      [id, name, email || null, phone || null, passwordHash, new Date()]
+    );
+    return id;
+  },
+  async verifyPassword(user, password) {
+    return bcrypt.compareSync(password || '', user.passwordHash);
+  }
+};
+
+module.exports = { init, Settings, Admin, Team, Services, Articles, Gallery, Partners, Messages, Consultations, Cases, Users };

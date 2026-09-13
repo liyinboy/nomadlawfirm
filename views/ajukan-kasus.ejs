@@ -12,11 +12,17 @@
     <% if (success && success.length) { %><div class="flash flash-success"><%= success[0] %></div><% } %>
     <% if (error && error.length) { %><div class="flash flash-error"><%= error[0] %></div><% } %>
 
+    <% if (!currentUser) { %>
+    <div class="account-nudge reveal">
+      Punya akun? <a href="/masuk?redirect=/ajukan-kasus">Masuk</a> supaya status pengajuan kasus Anda tersimpan dan bisa dicek kapan saja. Atau lanjut sebagai tamu di bawah ini.
+    </div>
+    <% } %>
+
     <div class="case-layout reveal reveal-2">
       <div class="form-card">
         <form action="/ajukan-kasus" method="POST">
           <div class="form-row">
-            <div class="field"><label for="name">Nama Lengkap</label><input type="text" id="name" name="name" required></div>
+            <div class="field"><label for="name">Nama Lengkap</label><input type="text" id="name" name="name" value="<%= currentUser ? currentUser.name : '' %>" required></div>
             <div class="field"><label for="phone">No. WhatsApp</label><input type="tel" id="phone" name="phone" required placeholder="08xxxxxxxxxx"></div>
           </div>
           <div class="field"><label for="email">Email (opsional)</label><input type="email" id="email" name="email"></div>

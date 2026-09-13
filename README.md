@@ -18,14 +18,24 @@ firma Anda, dan bisa diubah kapan saja lewat panel admin.
   navigation bar di HP, panel "quick actions", chat bubble) supaya pengalaman
   membuka website terasa seperti membuka aplikasi
 - Halaman: Beranda, Tentang Kami, Layanan, Tim Kami, Berita, Galeri, Mitra, Kontak
+- **Akun Klien (`/daftar`, `/masuk`, `/akun-saya`)** — klien bisa membuat akun
+  pakai email ATAU nomor HP + kata sandi. Setelah masuk, riwayat Konsultasi
+  Chat dan Pengajuan Kasus otomatis tersimpan ke akun mereka dan bisa dicek
+  kapan saja dari perangkat mana pun, lengkap dengan status (Sedang
+  Berlangsung/Selesai untuk konsultasi; Baru/Diproses/Selesai untuk kasus)
+  dan catatan dari tim. Tetap boleh dipakai tanpa akun (tamu) bila klien
+  tidak ingin daftar.
 - **Konsultasi Chat (`/konsultasi`)** — klien bisa memulai obrolan singkat
-  (nama, no. WhatsApp, topik, pertanyaan) tanpa perlu login/daftar akun.
-  Percakapan tersimpan di database dan diidentifikasi lewat cookie khusus
-  klien (bukan session admin), jadi klien bisa kembali membuka halaman yang
-  sama untuk melihat balasan advokat. Halaman ini otomatis mengecek balasan
-  baru tiap beberapa detik (polling), tanpa perlu reload manual.
+  (nama, no. WhatsApp, topik, pertanyaan) dengan atau tanpa akun. Kalau
+  sedang masuk ke akun, percakapan otomatis tersimpan di akun tersebut;
+  kalau sebagai tamu, tersimpan lewat cookie khusus klien (bukan session
+  admin), jadi klien tetap bisa kembali membuka halaman yang sama untuk
+  melihat balasan advokat. Halaman ini otomatis mengecek balasan baru tiap
+  beberapa detik (polling), tanpa perlu reload manual.
 - **Ajukan Kasus (`/ajukan-kasus`)** — formulir untuk klien mengirim ringkasan
-  kasus (kategori, kronologi) yang langsung masuk ke panel admin untuk ditinjau.
+  kasus (kategori, kronologi) yang langsung masuk ke panel admin untuk
+  ditinjau. Kalau klien sedang masuk ke akun, kasus ini otomatis tertaut ke
+  akun mereka dan statusnya bisa dipantau di halaman Akun Saya.
 - Tombol WhatsApp mengambang + tautan Instagram
 - Panel admin (`/admin`) untuk:
   - Tambah/edit/hapus anggota tim beserta foto

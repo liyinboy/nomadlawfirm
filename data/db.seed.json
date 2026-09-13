@@ -23,7 +23,13 @@
     "statsYear": 2026,
     "ongoingCases": 0,
     "heroImage": "",
-    "aboutImage": ""
+    "aboutImage": "",
+    "heroSlide1Image": "",
+    "heroSlide1Caption": "Pendampingan hukum pidana dan perdata dengan strategi yang terukur.",
+    "heroSlide2Image": "",
+    "heroSlide2Caption": "Menjaga hak keluarga Anda lewat proses hukum yang jelas dan terbuka.",
+    "heroSlide3Image": "",
+    "heroSlide3Caption": "Solusi hukum korporasi, dari kontrak hingga penyelesaian sengketa usaha."
   },
   "admin": {
     "username": "admin",

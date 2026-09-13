@@ -6,19 +6,26 @@
     <div class="app-page-head reveal">
       <div class="eyebrow">Ruang Konsultasi</div>
       <h1 class="section-title">Konsultasi Cepat Bersama Advokat Kami</h1>
-      <p class="section-lead">Ceritakan permasalahan Anda secara singkat. Advokat kami akan membalas langsung di ruang obrolan ini &mdash; tidak perlu mengunduh aplikasi tambahan.</p>
+      <p class="section-lead">Ceritakan permasalahan Anda secara singkat. Advokat kami akan membalas langsung di ruang obrolan ini, tidak perlu mengunduh aplikasi tambahan.</p>
     </div>
 
     <% if (success && success.length) { %><div class="flash flash-success"><%= success[0] %></div><% } %>
     <% if (error && error.length) { %><div class="flash flash-error"><%= error[0] %></div><% } %>
 
     <% if (!thread) { %>
+    <% if (!currentUser) { %>
+    <div class="account-nudge reveal reveal-2">
+      Punya akun? <a href="/masuk?redirect=/konsultasi">Masuk</a> supaya riwayat konsultasi Anda tersimpan dan bisa dicek kapan saja. Atau lanjut sebagai tamu di bawah ini.
+    </div>
+    <% } %>
     <div class="form-card chat-start-card reveal reveal-2">
       <h3 style="font-size:20px; margin-bottom:8px;">Mulai Konsultasi Baru</h3>
-      <p style="color:var(--muted); font-size:14px; margin-bottom:26px;">Percakapan bersifat rahasia. Balasan advokat akan muncul di halaman ini &mdash; cukup buka kembali kapan saja.</p>
+      <p style="color:var(--muted); font-size:14px; margin-bottom:26px;">Percakapan bersifat rahasia. Balasan advokat akan muncul di halaman ini, cukup buka kembali kapan saja.</p>
       <form action="/konsultasi/mulai" method="POST">
         <div class="form-row">
+          <% if (!currentUser) { %>
           <div class="field"><label for="name">Nama Anda</label><input type="text" id="name" name="name" required></div>
+          <% } %>
           <div class="field"><label for="phone">No. WhatsApp</label><input type="tel" id="phone" name="phone" placeholder="08xxxxxxxxxx"></div>
         </div>
         <div class="field">
@@ -63,7 +70,7 @@
         </button>
       </form>
       <% } else { %>
-      <div class="chat-closed-note">Percakapan ini sudah ditandai selesai oleh advokat kami. Terima kasih sudah berkonsultasi &mdash; silakan mulai percakapan baru di bawah ini bila ada pertanyaan lain.</div>
+      <div class="chat-closed-note">Percakapan ini sudah ditandai selesai oleh advokat kami. Terima kasih sudah berkonsultasi. Silakan mulai percakapan baru di bawah ini bila ada pertanyaan lain.</div>
       <% } %>
     </div>
 
@@ -72,7 +79,9 @@
       <h3 style="font-size:18px; margin-bottom:20px;">Mulai Konsultasi Baru</h3>
       <form action="/konsultasi/mulai" method="POST">
         <div class="form-row">
+          <% if (!currentUser) { %>
           <div class="field"><label for="name2">Nama Anda</label><input type="text" id="name2" name="name" value="<%= thread.name %>" required></div>
+          <% } %>
           <div class="field"><label for="phone2">No. WhatsApp</label><input type="tel" id="phone2" name="phone" value="<%= thread.phone %>" placeholder="08xxxxxxxxxx"></div>
         </div>
         <div class="field">

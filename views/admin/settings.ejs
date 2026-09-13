@@ -22,6 +22,36 @@
         <p class="hint">Disarankan foto beresolusi tinggi (landscape maupun potret sama-sama bisa, sistem akan otomatis memotong ke tampilan landscape). Foto ini khusus untuk latar Beranda, misalnya foto bersama tim.</p>
       </div>
       <div class="field full">
+        <label>Slider Foto Beranda Khusus HP (3 Foto)</label>
+        <p class="hint">Menggantikan judul &amp; paragraf hero saat dibuka lewat HP: 3 foto yang bisa digeser (swipe) dengan titik indikator, masing-masing punya kalimat sendiri. Tombol "Konsultasi Sekarang" &amp; "Lihat Layanan Kami" otomatis disembunyikan di tampilan HP.</p>
+        <div class="form-grid" style="margin-top:10px;">
+          <div class="field">
+            <label>Foto Slide 1</label>
+            <% if (settings.heroSlide1Image) { %>
+            <div class="current-photo"><img src="<%= settings.heroSlide1Image %>" alt="Slide 1 saat ini" style="width:90px; height:110px; object-fit:cover;"></div>
+            <% } %>
+            <input type="file" name="heroSlide1Image" accept="image/*">
+            <textarea name="heroSlide1Caption" placeholder="Kalimat untuk slide 1" style="margin-top:8px;"><%= settings.heroSlide1Caption || '' %></textarea>
+          </div>
+          <div class="field">
+            <label>Foto Slide 2</label>
+            <% if (settings.heroSlide2Image) { %>
+            <div class="current-photo"><img src="<%= settings.heroSlide2Image %>" alt="Slide 2 saat ini" style="width:90px; height:110px; object-fit:cover;"></div>
+            <% } %>
+            <input type="file" name="heroSlide2Image" accept="image/*">
+            <textarea name="heroSlide2Caption" placeholder="Kalimat untuk slide 2" style="margin-top:8px;"><%= settings.heroSlide2Caption || '' %></textarea>
+          </div>
+          <div class="field">
+            <label>Foto Slide 3</label>
+            <% if (settings.heroSlide3Image) { %>
+            <div class="current-photo"><img src="<%= settings.heroSlide3Image %>" alt="Slide 3 saat ini" style="width:90px; height:110px; object-fit:cover;"></div>
+            <% } %>
+            <input type="file" name="heroSlide3Image" accept="image/*">
+            <textarea name="heroSlide3Caption" placeholder="Kalimat untuk slide 3" style="margin-top:8px;"><%= settings.heroSlide3Caption || '' %></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="field full">
         <label>Foto Managing Partner (Tentang Kami &amp; Profil Firma)</label>
         <% if (settings.aboutImage) { %>
         <div class="current-photo">

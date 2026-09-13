@@ -100,6 +100,7 @@ tr:last-child td{ border-bottom:none; }
 .status-pill{ display:inline-block; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:700; text-transform:uppercase; }
 .status-published{ background:rgba(31,122,61,.15); color:#8fe0a8; }
 .status-draft{ background:rgba(182,146,79,.15); color:var(--brass); }
+.status-new{ background:rgba(29,78,216,.18); color:var(--red-bright); }
 
 .form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:22px; }
 .field{ margin-bottom:20px; }

@@ -1,0 +1,28 @@
+<%- include('partials/header') %>
+
+<section class="app-page">
+  <div class="container-wide app-page-inner">
+
+    <div class="app-page-head reveal">
+      <div class="eyebrow">Akun Klien</div>
+      <h1 class="section-title">Masuk ke Akun Anda</h1>
+      <p class="section-lead">Cek riwayat konsultasi dan status pengajuan kasus Anda dengan masuk ke akun.</p>
+    </div>
+
+    <% if (success && success.length) { %><div class="flash flash-success"><%= success[0] %></div><% } %>
+    <% if (error && error.length) { %><div class="flash flash-error"><%= error[0] %></div><% } %>
+
+    <div class="form-card auth-card reveal reveal-2">
+      <form action="/masuk" method="POST">
+        <input type="hidden" name="redirectTo" value="<%= redirectTo %>">
+        <div class="field"><label for="identifier">Email atau No. WhatsApp</label><input type="text" id="identifier" name="identifier" required autofocus placeholder="nama@email.com atau 08xxxxxxxxxx"></div>
+        <div class="field"><label for="password">Kata Sandi</label><input type="password" id="password" name="password" required></div>
+        <button type="submit" class="btn btn-primary btn-block">Masuk</button>
+      </form>
+      <p class="auth-switch">Belum punya akun? <a href="/daftar<%= redirectTo ? ('?redirect=' + encodeURIComponent(redirectTo)) : '' %>">Daftar di sini</a></p>
+    </div>
+
+  </div>
+</section>
+
+<%- include('partials/footer') %>

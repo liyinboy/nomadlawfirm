@@ -36,6 +36,17 @@
       <li><a href="/mitra" class="<%= currentPath === '/mitra' ? 'active' : '' %>">Mitra</a></li>
     </ul>
     <div class="nav-cta">
+      <% if (currentUser) { %>
+      <a href="/akun-saya" class="nav-account-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0116 0v1"/></svg>
+        <%= currentUser.name.split(' ')[0] %>
+      </a>
+      <% } else { %>
+      <a href="/masuk" class="nav-account-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0116 0v1"/></svg>
+        Masuk
+      </a>
+      <% } %>
       <a href="/ajukan-kasus" class="nav-wa" style="border-color:var(--red-bright); background:rgba(29,78,216,.12);">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
         Ajukan Kasus
@@ -63,6 +74,11 @@
     <li><a href="/konsultasi">Konsultasi</a></li>
     <li><a href="/ajukan-kasus">Ajukan Kasus</a></li>
     <li><a href="/kontak">Kontak</a></li>
+    <% if (currentUser) { %>
+    <li><a href="/akun-saya">Akun Saya</a></li>
+    <% } else { %>
+    <li><a href="/masuk">Masuk / Daftar</a></li>
+    <% } %>
   </ul>
   <a href="https://wa.me/<%= settings.whatsapp %>" target="_blank" rel="noopener" class="nav-wa">Hubungi via WhatsApp</a>
 </div>

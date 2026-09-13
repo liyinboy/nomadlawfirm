@@ -6,12 +6,34 @@
     <div class="hero-inner">
       <div class="hero-kicker"><span class="rule"></span><span>Advokat &amp; Konsultan Hukum</span></div>
       <h1><%- settings.heroTitle.replace(/Hukum/, '<em>Hukum</em>') %></h1>
-      <p><%= settings.heroSubtitle %></p>
       <div class="hero-actions">
         <a href="/kontak" class="btn btn-primary">Konsultasi Sekarang</a>
         <a href="/layanan" class="btn btn-outline">Lihat Layanan Kami</a>
       </div>
-      <% if (settings.heroImage) { %>
+      <%
+        const heroSlides = [
+          { image: settings.heroSlide1Image, caption: settings.heroSlide1Caption },
+          { image: settings.heroSlide2Image, caption: settings.heroSlide2Caption },
+          { image: settings.heroSlide3Image, caption: settings.heroSlide3Caption }
+        ].filter(s => s.image);
+      %>
+      <% if (heroSlides.length) { %>
+      <div class="hero-mobile-slider">
+        <div class="hms-track" id="hms-track">
+          <% heroSlides.forEach((slide, i) => { %>
+          <div class="hms-slide">
+            <img src="<%= slide.image %>" alt="<%= settings.officeName %> <%= i + 1 %>">
+            <% if (slide.caption) { %><div class="hms-caption"><%= slide.caption %></div><% } %>
+          </div>
+          <% }) %>
+        </div>
+        <% if (heroSlides.length > 1) { %>
+        <div class="hms-dots" id="hms-dots">
+          <% heroSlides.forEach((slide, i) => { %><span class="hms-dot<%= i === 0 ? ' active' : '' %>" data-index="<%= i %>"></span><% }) %>
+        </div>
+        <% } %>
+      </div>
+      <% } else if (settings.heroImage) { %>
       <div class="hero-mobile-photo"><img src="<%= settings.heroImage %>" alt="Tim <%= settings.officeName %>"></div>
       <% } %>
     </div>

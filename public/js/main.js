@@ -48,6 +48,28 @@ document.addEventListener('DOMContentLoaded', () => {
     revealEls.forEach(el => el.classList.add('in'));
   }
 
+  // Hero mobile photo slider (swipe + titik indikator)
+  const hmsTrack = document.getElementById('hms-track');
+  const hmsDots = document.getElementById('hms-dots');
+  if (hmsTrack && hmsDots) {
+    const dots = Array.from(hmsDots.querySelectorAll('.hms-dot'));
+    const setActive = (i) => dots.forEach((d, idx) => d.classList.toggle('active', idx === i));
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const i = parseInt(dot.dataset.index, 10);
+        hmsTrack.scrollTo({ left: i * hmsTrack.clientWidth, behavior: 'smooth' });
+      });
+    });
+    let scrollTimer;
+    hmsTrack.addEventListener('scroll', () => {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(() => {
+        const i = Math.round(hmsTrack.scrollLeft / hmsTrack.clientWidth);
+        setActive(i);
+      }, 80);
+    }, { passive: true });
+  }
+
   // Gallery lightbox
   const lightbox = document.querySelector('.lightbox');
   if (lightbox) {
