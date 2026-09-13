@@ -67,6 +67,15 @@ function ensureClientToken(req, res, next) {
   next();
 }
 
+// ---- Client account login (separate from admin session & from the guest token above) ----
+function requireUserLogin(req, res, next) {
+  if (!req.session.user) {
+    req.flash('error', 'Silakan masuk ke akun Anda terlebih dahulu.');
+    return res.redirect('/masuk?redirect=' + encodeURIComponent(req.originalUrl));
+  }
+  next();
+}
+
 app.use(session({
   secret: process.env.SESSION_SECRET || 'nomad-law-firm-secret-change-me',
   resave: false,
@@ -80,6 +89,7 @@ app.use(async (req, res, next) => {
   try {
     res.locals.settings = await db.Settings.get();
     res.locals.currentAdmin = req.session.admin || null;
+    res.locals.currentUser = req.session.user || null;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     res.locals.currentPath = req.path;
@@ -265,10 +275,89 @@ app.post('/kontak', h(async (req, res) => {
 }));
 
 // =====================================================================
+// AKUN KLIEN (Daftar / Masuk / Keluar / Akun Saya)
+// =====================================================================
+app.get('/daftar', (req, res) => {
+  if (req.session.user) return res.redirect('/akun-saya');
+  res.render('daftar', { title: 'Daftar Akun', redirectTo: req.query.redirect || '' });
+});
+
+app.post('/daftar', h(async (req, res) => {
+  const { name, identifier, password, redirectTo } = req.body;
+  const back = '/daftar' + (redirectTo ? ('?redirect=' + encodeURIComponent(redirectTo)) : '');
+  if (!name || !identifier || !password) {
+    req.flash('error', 'Nama, email/no. HP, dan kata sandi wajib diisi.');
+    return res.redirect(back);
+  }
+  if (password.length < 6) {
+    req.flash('error', 'Kata sandi minimal 6 karakter.');
+    return res.redirect(back);
+  }
+  const existing = await db.Users.findByIdentifier(identifier.trim());
+  if (existing) {
+    req.flash('error', 'Email/No. HP tersebut sudah terdaftar. Silakan masuk.');
+    return res.redirect('/masuk' + (redirectTo ? ('?redirect=' + encodeURIComponent(redirectTo)) : ''));
+  }
+  const isEmail = identifier.includes('@');
+  const userId = await db.Users.create({
+    name: name.trim(),
+    email: isEmail ? identifier.trim() : null,
+    phone: !isEmail ? identifier.trim() : null,
+    password
+  });
+  req.session.user = { id: userId, name: name.trim() };
+  req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 30; // 30 hari, biar tidak cepat ke-logout
+  req.flash('success', 'Akun berhasil dibuat. Selamat datang, ' + name.trim() + '!');
+  res.redirect(redirectTo && redirectTo.startsWith('/') ? redirectTo : '/akun-saya');
+}));
+
+app.get('/masuk', (req, res) => {
+  if (req.session.user) return res.redirect('/akun-saya');
+  res.render('masuk', { title: 'Masuk Akun', redirectTo: req.query.redirect || '' });
+});
+
+app.post('/masuk', h(async (req, res) => {
+  const { identifier, password, redirectTo } = req.body;
+  const back = '/masuk' + (redirectTo ? ('?redirect=' + encodeURIComponent(redirectTo)) : '');
+  if (!identifier || !password) {
+    req.flash('error', 'Email/No. HP dan kata sandi wajib diisi.');
+    return res.redirect(back);
+  }
+  const user = await db.Users.findByIdentifier(identifier.trim());
+  if (!user || !(await db.Users.verifyPassword(user, password))) {
+    req.flash('error', 'Email/No. HP atau kata sandi salah.');
+    return res.redirect(back);
+  }
+  req.session.user = { id: user.id, name: user.name };
+  req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 30;
+  req.flash('success', 'Selamat datang kembali, ' + user.name + '!');
+  res.redirect(redirectTo && redirectTo.startsWith('/') ? redirectTo : '/akun-saya');
+}));
+
+app.post('/keluar', (req, res) => {
+  delete req.session.user;
+  res.redirect('/');
+});
+
+app.get('/akun-saya', requireUserLogin, h(async (req, res) => {
+  const [threads, cases] = await Promise.all([
+    db.Consultations.allByUser(req.session.user.id),
+    db.Cases.allByUser(req.session.user.id)
+  ]);
+  res.render('akun-saya', { title: 'Akun Saya', threads, cases });
+}));
+
+// Helper: cari thread konsultasi milik user yang login, atau milik tamu (cookie), sesuai konteks
+async function findMyThread(req) {
+  if (req.session.user) return db.Consultations.findByUserId(req.session.user.id);
+  return db.Consultations.findByToken(req.clientToken);
+}
+
+// =====================================================================
 // KONSULTASI (chat singkat dengan advokat, tersimpan di database)
 // =====================================================================
 app.get('/konsultasi', ensureClientToken, h(async (req, res) => {
-  const thread = await db.Consultations.findByToken(req.clientToken);
+  const thread = await findMyThread(req);
   let messages = [];
   if (thread) {
     messages = await db.Consultations.messages(thread.id);
@@ -279,22 +368,25 @@ app.get('/konsultasi', ensureClientToken, h(async (req, res) => {
 
 app.post('/konsultasi/mulai', ensureClientToken, h(async (req, res) => {
   const { name, phone, topic, message } = req.body;
-  if (!name || !message) {
+  if ((!req.session.user && !name) || !message) {
     req.flash('error', 'Nama dan pertanyaan awal wajib diisi.');
     return res.redirect('/konsultasi');
   }
-  const existing = await db.Consultations.findByToken(req.clientToken);
+  const existing = await findMyThread(req);
   if (existing && existing.status === 'open') {
     return res.redirect('/konsultasi');
   }
   await db.Consultations.create({
-    clientToken: req.clientToken, name, phone, topic, firstMessage: message
+    clientToken: req.clientToken,
+    userId: req.session.user ? req.session.user.id : null,
+    name: req.session.user ? req.session.user.name : name,
+    phone, topic, firstMessage: message
   });
   res.redirect('/konsultasi');
 }));
 
 app.post('/konsultasi/kirim', ensureClientToken, h(async (req, res) => {
-  const thread = await db.Consultations.findByToken(req.clientToken);
+  const thread = await findMyThread(req);
   const { message } = req.body;
   if (thread && thread.status === 'open' && message && message.trim()) {
     await db.Consultations.addMessage(thread.id, 'client', message.trim());
@@ -305,7 +397,7 @@ app.post('/konsultasi/kirim', ensureClientToken, h(async (req, res) => {
 
 // Polling endpoint dipakai oleh halaman /konsultasi untuk mengambil balasan baru tanpa reload
 app.get('/konsultasi/cek', ensureClientToken, h(async (req, res) => {
-  const thread = await db.Consultations.findByToken(req.clientToken);
+  const thread = await findMyThread(req);
   if (!thread) return res.json({ status: 'none' });
   const since = req.query.since || null;
   const messages = await db.Consultations.messagesSince(thread.id, since);
@@ -326,7 +418,7 @@ app.post('/ajukan-kasus', h(async (req, res) => {
     req.flash('error', 'Nama, no. telepon, dan uraian kasus wajib diisi.');
     return res.redirect('/ajukan-kasus');
   }
-  await db.Cases.create({ name, phone, email, category, description });
+  await db.Cases.create({ userId: req.session.user ? req.session.user.id : null, name, phone, email, category, description });
   req.flash('success', 'Kasus Anda berhasil diajukan. Tim kami akan meninjau dan menghubungi Anda segera.');
   res.redirect('/ajukan-kasus');
 }));

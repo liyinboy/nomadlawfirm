@@ -145,6 +145,12 @@ h1,h2,h3,h4{ font-family:var(--serif); font-weight:600; line-height:1.15; margin
 .nav-links a:hover::after, .nav-links a.active::after{ width:100%; }
 
 .nav-cta{ display:flex; align-items:center; gap:14px; flex-shrink:0; }
+.nav-account-link{
+  display:flex; align-items:center; gap:6px; color:var(--muted); font-size:13.5px; font-weight:600;
+  text-decoration:none; white-space:nowrap;
+}
+.nav-account-link:hover{ color:var(--white); }
+@media (max-width:1180px){ .nav-account-link{ display:none; } }
 .nav-wa{
   display:inline-flex; align-items:center; gap:8px; padding:11px 18px; white-space:nowrap;
   border:1px solid var(--line-strong); border-radius:var(--radius); font-size:12px; font-weight:700;
@@ -799,6 +805,33 @@ h1,h2,h3,h4{ font-family:var(--serif); font-weight:600; line-height:1.15; margin
 .chat-status-pill{ display:inline-block; padding:3px 11px; border-radius:20px; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; }
 .chat-status-pill.is-open{ background:rgba(29,78,216,.18); color:var(--red-bright); }
 .chat-status-pill.is-closed{ background:rgba(31,122,61,.15); color:#8fe0a8; }
+.chat-status-pill.is-progress{ background:rgba(182,146,79,.18); color:var(--brass); }
+
+/* =========================================================
+   AUTH PAGES (Daftar / Masuk) & AKUN SAYA
+   ========================================================= */
+.auth-card{ max-width:480px; }
+.auth-switch{ text-align:center; margin:22px 0 0; font-size:14px; color:var(--muted); }
+.auth-switch a{ color:var(--red-bright); font-weight:600; }
+
+.account-block{ background:var(--ink-2); border:1px solid var(--line); border-radius:14px; padding:26px 28px; margin-bottom:22px; }
+.account-block-head{ display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:18px; flex-wrap:wrap; }
+.account-block-head h3{ font-size:19px; margin:0; }
+.account-empty{ color:var(--muted); font-size:14.5px; margin:0; }
+.account-list{ display:flex; flex-direction:column; gap:10px; }
+.account-item{
+  display:flex; align-items:flex-start; justify-content:space-between; gap:16px;
+  background:var(--ink-3); border-radius:10px; padding:16px 18px; text-decoration:none; color:inherit;
+}
+.account-item strong{ display:block; font-size:15px; margin-bottom:4px; }
+.account-item-date{ display:block; font-size:12.5px; color:var(--muted-2); margin-bottom:8px; }
+.account-item-desc{ font-size:13.5px; color:var(--muted); margin:0; line-height:1.5; }
+.account-item-note{ font-size:13px; color:var(--cream); margin:8px 0 0; background:rgba(255,255,255,.05); padding:8px 12px; border-radius:8px; }
+.account-nudge{
+  background:rgba(29,78,216,.1); border:1px solid rgba(29,78,216,.3); border-radius:10px;
+  padding:14px 18px; font-size:14px; color:var(--muted); margin-bottom:22px;
+}
+.account-nudge a{ color:var(--red-bright); font-weight:700; }
 .chat-wa-fallback{ font-size:12px; color:var(--muted-2); text-decoration:underline; }
 .chat-wa-fallback:hover{ color:var(--red-bright); }
 
