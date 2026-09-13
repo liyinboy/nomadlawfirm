@@ -761,7 +761,8 @@ app.post('/admin/settings', requireAuth, uploadHero.fields([
     phone, phoneDisplay, whatsapp, email, address, operationalHours,
     instagram, tiktok, facebook, mapEmbedUrl, mapUrl,
     totalCasesHandled, statsYear, ongoingCases,
-    heroSlide1Caption, heroSlide2Caption, heroSlide3Caption
+    heroSlide1Caption, heroSlide2Caption, heroSlide3Caption,
+    removeHeroImage, removeAboutImage, removeHeroSlide1Image, removeHeroSlide2Image, removeHeroSlide3Image
   } = req.body;
   const update = {
     officeName, shortName, tagline, heroTitle, heroSubtitle,
@@ -777,22 +778,37 @@ app.post('/admin/settings', requireAuth, uploadHero.fields([
   if (req.files && req.files.heroImage && req.files.heroImage[0]) {
     removeFileIfLocal(current.heroImage);
     update.heroImage = `/uploads/hero/${req.files.heroImage[0].filename}`;
+  } else if (removeHeroImage) {
+    removeFileIfLocal(current.heroImage);
+    update.heroImage = '';
   }
   if (req.files && req.files.aboutImage && req.files.aboutImage[0]) {
     removeFileIfLocal(current.aboutImage);
     update.aboutImage = `/uploads/hero/${req.files.aboutImage[0].filename}`;
+  } else if (removeAboutImage) {
+    removeFileIfLocal(current.aboutImage);
+    update.aboutImage = '';
   }
   if (req.files && req.files.heroSlide1Image && req.files.heroSlide1Image[0]) {
     removeFileIfLocal(current.heroSlide1Image);
     update.heroSlide1Image = `/uploads/hero/${req.files.heroSlide1Image[0].filename}`;
+  } else if (removeHeroSlide1Image) {
+    removeFileIfLocal(current.heroSlide1Image);
+    update.heroSlide1Image = '';
   }
   if (req.files && req.files.heroSlide2Image && req.files.heroSlide2Image[0]) {
     removeFileIfLocal(current.heroSlide2Image);
     update.heroSlide2Image = `/uploads/hero/${req.files.heroSlide2Image[0].filename}`;
+  } else if (removeHeroSlide2Image) {
+    removeFileIfLocal(current.heroSlide2Image);
+    update.heroSlide2Image = '';
   }
   if (req.files && req.files.heroSlide3Image && req.files.heroSlide3Image[0]) {
     removeFileIfLocal(current.heroSlide3Image);
     update.heroSlide3Image = `/uploads/hero/${req.files.heroSlide3Image[0].filename}`;
+  } else if (removeHeroSlide3Image) {
+    removeFileIfLocal(current.heroSlide3Image);
+    update.heroSlide3Image = '';
   }
   await db.Settings.update(update);
   req.flash('success', 'Pengaturan berhasil disimpan.');

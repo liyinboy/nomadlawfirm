@@ -16,6 +16,7 @@
           <img src="<%= settings.heroImage %>" alt="Foto latar beranda saat ini" style="width:110px; height:70px; object-fit:cover;">
           <span class="hint">Foto saat ini. Unggah foto baru untuk menggantinya, tampil otomatis dalam format landscape di halaman Beranda.</span>
         </div>
+        <label class="checkbox-hint"><input type="checkbox" name="removeHeroImage" value="1"> Hapus foto ini (jangan tampilkan latar beranda)</label>
         <% } %>
         <input type="file" name="heroImage" accept="image/*" data-preview="#hero-preview">
         <img id="hero-preview" src="" alt="" style="display:none; width:110px; height:70px; object-fit:cover; margin-top:10px; border:1px solid var(--line-strong); border-radius:4px;">
@@ -29,6 +30,7 @@
             <label>Foto Slide 1</label>
             <% if (settings.heroSlide1Image) { %>
             <div class="current-photo"><img src="<%= settings.heroSlide1Image %>" alt="Slide 1 saat ini" style="width:90px; height:110px; object-fit:cover;"></div>
+            <label class="checkbox-hint"><input type="checkbox" name="removeHeroSlide1Image" value="1"> Hapus foto ini</label>
             <% } %>
             <input type="file" name="heroSlide1Image" accept="image/*">
             <textarea name="heroSlide1Caption" placeholder="Kalimat untuk slide 1" style="margin-top:8px;"><%= settings.heroSlide1Caption || '' %></textarea>
@@ -37,6 +39,7 @@
             <label>Foto Slide 2</label>
             <% if (settings.heroSlide2Image) { %>
             <div class="current-photo"><img src="<%= settings.heroSlide2Image %>" alt="Slide 2 saat ini" style="width:90px; height:110px; object-fit:cover;"></div>
+            <label class="checkbox-hint"><input type="checkbox" name="removeHeroSlide2Image" value="1"> Hapus foto ini</label>
             <% } %>
             <input type="file" name="heroSlide2Image" accept="image/*">
             <textarea name="heroSlide2Caption" placeholder="Kalimat untuk slide 2" style="margin-top:8px;"><%= settings.heroSlide2Caption || '' %></textarea>
@@ -45,6 +48,7 @@
             <label>Foto Slide 3</label>
             <% if (settings.heroSlide3Image) { %>
             <div class="current-photo"><img src="<%= settings.heroSlide3Image %>" alt="Slide 3 saat ini" style="width:90px; height:110px; object-fit:cover;"></div>
+            <label class="checkbox-hint"><input type="checkbox" name="removeHeroSlide3Image" value="1"> Hapus foto ini</label>
             <% } %>
             <input type="file" name="heroSlide3Image" accept="image/*">
             <textarea name="heroSlide3Caption" placeholder="Kalimat untuk slide 3" style="margin-top:8px;"><%= settings.heroSlide3Caption || '' %></textarea>
@@ -58,6 +62,7 @@
           <img src="<%= settings.aboutImage %>" alt="Foto Managing Partner saat ini" style="width:90px; height:110px; object-fit:cover;">
           <span class="hint">Foto saat ini. Unggah foto baru untuk menggantinya.</span>
         </div>
+        <label class="checkbox-hint"><input type="checkbox" name="removeAboutImage" value="1"> Hapus foto ini</label>
         <% } %>
         <input type="file" name="aboutImage" accept="image/*" data-preview="#about-preview">
         <img id="about-preview" src="" alt="" style="display:none; width:90px; height:110px; object-fit:cover; margin-top:10px; border:1px solid var(--line-strong); border-radius:4px;">
